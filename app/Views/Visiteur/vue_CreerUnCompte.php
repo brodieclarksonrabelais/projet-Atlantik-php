@@ -31,7 +31,7 @@
     echo form_input('txtMel', set_value('txtMel')), '</br>', '</br>';
     
     echo form_label('Mot de passe : ','txtMotDePasse');
-    echo form_input('txtMotDePasse : ', set_value('txtMotDePasse')), '</br>', '</br>';    
+    echo form_input('txtMotDePasse', set_value('txtMotDePasse')), '</br>', '</br>';    
     
     echo form_submit('submit', 'Créer le compte');
     echo form_close();

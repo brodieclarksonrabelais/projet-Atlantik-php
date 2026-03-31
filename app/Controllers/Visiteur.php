@@ -12,6 +12,56 @@ class Visiteur extends BaseController
         . view('Templates/Footer');
     }
 
+    public function seConnecter()
+    {
+        helper(['form']);
+        $session = session();
+ 
+        $data['TitreDeLaPage'] = 'Se connecter';
+
+        if (!$this->request->is('post')) {
+            return view('Templates/Header', $data) 
+            . view('Visiteur/vue_SeConnecter')
+            . view('Templates/Footer');
+        }
+
+        $reglesValidation = [
+            'txtMel' => 'required',
+            'txtMDPConnect' => 'required',
+        ];
+        if (!$this->validate($reglesValidation)) {
+            $data['TitreDeLaPage'] = "Saisie incorrecte";
+            return view('Templates/Header', $data)
+            . view('Visiteur/vue_SeConnecter')
+            . view('Templates/Footer');
+        }
+
+        $Mel = $this->request->getPost('txtMel');
+        $MdP = $this->request->getPost('txtMDPConnect');
+
+        $modClient = new ModeleClient();
+        $condition = ['mel'=>$Mel,'motdepasse'=>$MdP];
+        $clientRetourne = $modClient->where($condition)->first();
+ 
+        if ($clientRetourne != null) {
+            $session->set('mel', $clientRetourne->MEL);
+            $data['Mel'] = $Mel;
+            echo view('Templates/Header', $data);
+            echo view('Visiteur/vue_ConnexionReussie');
+        } else {
+            $data['TitreDeLaPage'] = "Adresse mel ou/et Mot de passe inconnu(s)";
+            return view('Templates/Header', $data)
+            . view('Visiteur/vue_SeConnecter')
+            . view('Templates/Footer');
+        }
+    } 
+
+     public function seDeconnecter()
+    {
+        session()->destroy();
+        returnredirect()->to('seconnecter');
+    } 
+
     public function ajouterClient()
     {
         $data['TitreDeLaPage'] = 'Ajouter un client';
