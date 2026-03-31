@@ -1,6 +1,7 @@
 <?php
 namespace App\Controllers;
 use App\Models\ModeleClient;
+use App\Models\ModeleLiaison;
 helper(['url', 'assets', 'form']);
 
 class Visiteur extends BaseController
@@ -106,5 +107,15 @@ class Visiteur extends BaseController
         return view('Templates/Header')
             .view('Visiteur/vue_RapportAjouterClient', $donnees)
             .view('Templates/Footer');
+    }
+
+    public function liaisonParSecteur()
+    {
+        $modLiaison = new ModeleLiaison(); //instanciation du modèle
+        $donnees['lesLiaisons'] = $modLiaison->getAllLiaison();
+        $donnees['TitreDeLaPage'] = "Liste des liaisons";
+        return view('Templates/Header')
+        . view('Visiteur/vue_LiaisonParSecteurs', $donnees)
+        . view('Templates/Footer');
     }
 }
