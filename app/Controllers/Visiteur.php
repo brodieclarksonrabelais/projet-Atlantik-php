@@ -2,6 +2,7 @@
 namespace App\Controllers;
 use App\Models\ModeleClient;
 use App\Models\ModeleLiaison;
+use App\Models\ModeleTarif;
 helper(['url', 'assets', 'form']);
 
 class Visiteur extends BaseController
@@ -111,7 +112,7 @@ class Visiteur extends BaseController
 
     public function liaisonParSecteur()
     {
-        $modLiaison = new ModeleLiaison(); //instanciation du modèle
+        $modLiaison = new ModeleLiaison();
         $donnees['lesLiaisons'] = $modLiaison->getAllLiaison();
         $donnees['TitreDeLaPage'] = "Liste des liaisons";
         return view('Templates/Header')
@@ -119,11 +120,12 @@ class Visiteur extends BaseController
         . view('Templates/Footer');
     }
 
-    public function tarifsParLiaison()
+    public function tarifsParLiaison($noliaison)
     {
-        $modTarif = new ModeleTarif(); //instanciation du modèle
-        $donnees['lesTarifs'] = $modTarif->getWhere(['noliaison' => $noliaison])->getAllTarif();
+        $modTarif = new ModeleTarif();
+        $donnees['lesTarifs'] = $modTarif/*->getWhere(['noliaison' => $noliaison])*/->getAllTarif($noliaison);
         $donnees['TitreDeLaPage'] = "Liste des tarifs";
+        /*$donnees['TitreDeLaPage'] = "Liaison " .$donnees['lesTarifs']-> numliaison. " : " .$donnees['lesTarifs']-> portDepart. " - " .$donnees['lesTarifs']-> portArrivee;*/
         return view('Templates/Header')
         . view('Visiteur/vue_TarifsParLiaison', $donnees)
         . view('Templates/Footer');

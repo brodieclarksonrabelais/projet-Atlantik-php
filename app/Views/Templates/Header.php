@@ -22,9 +22,15 @@
                 <input class="form-control me-2" type="text" placeholder="Recherche dans le catalogue (saisie du nom de l'auteur)" name="navbar">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Rechercher</button>
             </form>
-            <a href="<?php echo site_url('seconnecter') ?>">Se connecter</a>&nbsp;&nbsp;
-            <a href="<?php echo site_url('creeruncompte') ?>">Créer un compte</a>&nbsp;&nbsp;
-            <a href="<?php echo site_url('liaisonparsecteur') ?>">Liaison par secteur</a>&nbsp;&nbsp;
+            <?php if(!is_null($session->get('mel'))) : ?>
+                <?php echo 'Utilisateur connecté : ' . $session->get('prenom').'&nbsp;&nbsp;'; ?>
+                <a href="<?php echo site_url('sedeconnecter') ?>">Se déconnecter</a>&nbsp;&nbsp;
+                <a href="<?php echo site_url('modifieruncompte') ?>">Créer un compte</a>&nbsp;&nbsp;
+            <?php else : ?>
+                <a href="<?php echo site_url('seconnecter') ?>">Se connecter</a>&nbsp;&nbsp;
+                <a href="<?php echo site_url('creeruncompte') ?>">Créer un compte</a>&nbsp;&nbsp;
+                <a href="<?php echo site_url('liaisonparsecteur') ?>">Liaison par secteur</a>&nbsp;&nbsp;
+            <?php endif; ?>
             </div>
         </div>
     </nav>

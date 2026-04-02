@@ -13,7 +13,7 @@ foreach ($lesLiaisons as $uneLiaison)
 {
     echo "<TR>";
     echo "<TD>".$uneLiaison->nomsecteur."</TD><TD>"
-    .anchor('vue_TarifsParLiaison/'.$uneLiaison->noliaison, $uneLiaison->noliaison)."</TD><TD>"
+    .anchor('tarifsparliaison/'.$uneLiaison->noliaison, $uneLiaison->noliaison)."</TD><TD>"
     .$uneLiaison->DISTANCE."</TD><TD>"
     .$uneLiaison->portDepart."</TD><TD>"
     .$uneLiaison->portArrivee."</TD>";
