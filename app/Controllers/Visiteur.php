@@ -118,4 +118,14 @@ class Visiteur extends BaseController
         . view('Visiteur/vue_LiaisonParSecteurs', $donnees)
         . view('Templates/Footer');
     }
+
+    public function tarifsParLiaison()
+    {
+        $modTarif = new ModeleTarif(); //instanciation du modèle
+        $donnees['lesTarifs'] = $modTarif->getWhere(['noliaison' => $noliaison])->getAllTarif();
+        $donnees['TitreDeLaPage'] = "Liste des tarifs";
+        return view('Templates/Header')
+        . view('Visiteur/vue_TarifsParLiaison', $donnees)
+        . view('Templates/Footer');
+    }
 }
