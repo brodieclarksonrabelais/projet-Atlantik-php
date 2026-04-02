@@ -1,5 +1,5 @@
- <h2><?php echo $TitreDeLaPage ?></h2>
- <table border=2>
+ <?php echo '<h2>' .$TitreDeLaPage. '</h2>';
+ /*<table border=2>
     <tr>
         <td colspan="2">Secteur</td>
         <td>Code Liaison</td>
@@ -18,4 +18,26 @@
         endforeach;
         ?>
     </tr>
-</table>
+</table>*/
+
+echo "<table class='table table-striped'>";
+echo "
+<tr>
+    <th>Secteur</th>
+    <th>Code Liaison</th>
+    <th>Distance en milles marin</th>
+    <th>Port de départ</th>
+    <th>Port d’arrivée</th>
+</tr>";
+foreach ($lesLiaisons as $uneLiaison)
+{
+    echo "<TR>";
+    echo "<TD>".$uneLiaison->nomsecteur."</TD><TD>"
+    .anchor('/'.$uneLiaison->noliaison)."</TD><TD>"
+    .$uneLiaison->DISTANCE."</TD><TD>"
+    .$uneLiaison->portDepart."</TD><TD>"
+    .$uneLiaison->portArrivee."</TD>";
+    echo "</TR>";
+}
+echo "</table>";
+?>
