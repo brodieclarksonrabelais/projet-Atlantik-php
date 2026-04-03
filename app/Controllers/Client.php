@@ -1,37 +1,38 @@
 <?php
 namespace App\Controllers;
+use App\Models\ModeleClient;
 helper(['url', 'assets', 'form']);
  
 class Client extends BaseController
 {
     public function modifierClient()
     {
-        $data['TitreDeLaPage'] = 'Ajouter un client';
+        $data['TitreDeLaPage'] = 'Modifer vos informations';
         if (!$this->request->is('post')) {
             return view('Templates/Header')
-            . view('Visiteur/vue_CreerUnCompte', $data)
+            . view('Client/vue_ModifierUnCompte', $data)
             . view('Templates/Footer');
         }
         $reglesValidation = [
-            'txtNom' => 'required|string|max_length[60]',
-            'txtPrenom' => 'required|string|max_length[60]',
-            'txtAdresse' => 'required|string|max_length[128]',
-            'txtCodepostal' => 'required|integer|max_length[11]',
-            'txtVille' => 'required|string|max_length[80]',
-            'txtTelfixe' => 'required|string|max_length[16]',
-            'txtTelportable' => 'required|string|max_length[16]',
-            'txtMel' => 'required|string|max_length[80]',
-            'txtMotDePasse' => 'required|string|min_length[2]',
+            'txtNom' => 'permit_empty|string|max_length[60]',
+            'txtPrenom' => 'permit_empty|string|max_length[60]',
+            'txtAdresse' => 'permit_empty|string|max_length[128]',
+            'txtCodepostal' => 'permit_empty|integer|max_length[11]',
+            'txtVille' => 'permit_empty|string|max_length[80]',
+            'txtTelfixe' => 'permit_empty|string|max_length[16]',
+            'txtTelportable' => 'permit_empty|string|max_length[16]',
+            'txtMel' => 'permit_empty|string|max_length[80]',
+            'txtMotDePasse' => 'permit_empty|string|min_length[2]',
         ];
         if (!$this->validate($reglesValidation)) {
 
             $data['TitreDeLaPage'] = "Saisie incorrecte";
             return view('Templates/Header')
-            . view('Visiteur/vue_CreerUnCompte', $data)
+            . view('Client/vue_ModifierUnCompte', $data)
             . view('Templates/Footer');
         }
 
-        $donneesAInserer = array(
+        $donneesAModifier = array(
             'NOM' => $this->request->getPost('txtNom'),
             'PRENOM' => $this->request->getPost('txtPrenom'),
             'ADRESSE' => $this->request->getPost('txtAdresse'),
@@ -43,10 +44,27 @@ class Client extends BaseController
             'MOTDEPASSE' => $this->request->getPost('txtMotDePasse'),
         ); 
         $modClient = new ModeleClient();
-        $donnees['clientAjoute'] = $modClient->update($donneesAInserer, false);
+        $donnees['clientAjoute'] = $modClient->update($donneesAModifier, false);
 
         return view('Templates/Header')
             .view('Visiteur/vue_RapportAjouterClient', $donnees)
             .view('Templates/Footer');
+    }
+
+        public function reservationsPourUnClient($mel)
+    {
+        $data['TitreDeLaPage'] = 'Historique des reservations';
+        
+        $modClient = new ModeleClient();
+        $donnees['noClient'] = $modClient->whre($mel, 'MEL');
+
+        $pager = \Config\Services::pager();
+        $modelReservation = new ModeleReservation(); //instanciation du modèle
+        $data['lesReservations'] = $modelReservation->paginate(4); // Récupération des données via le modèle
+        $data['pager'] = $modelReservation->pager;
+     
+        return view('Templates/Header') //envoi du header
+        .view('Client/vue_HistoriqueReservation', $data)
+        .view('Templates/Footer'); //envoi du footer
     }
 }

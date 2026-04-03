@@ -1,6 +1,6 @@
 <?php echo '<h2>' .$TitreDeLaPage. '</h2>';
 
-echo "<table class='table table-striped'>";
+/*echo "<table class='table table-striped'>";
 echo "
 <tr>
     <th>noliaison</th>
@@ -27,5 +27,17 @@ foreach ($lesTarifs as $unTarif)
     .$unTarif->tarif."</TD>";
     echo "</TR>";
 }
+echo "</table>";*/
+
+foreach($lesPeriodes as $unePeriode)
+{
+    echo "<TR>";
+    echo "<TD>".$unePeriode->datedebut."</TD><TD>"
+    .$unePeriode->datefin."</TD>";
+    echo "</TR>";
+    $i += 1;
+}
 echo "</table>";
+
+
 ?>

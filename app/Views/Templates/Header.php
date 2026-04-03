@@ -14,23 +14,18 @@
     <nav  class="navbar navbar-expand-sm navbar-dark bg-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="javascript:void(0)"> <a href="index.php"></a></a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
-            <span class="navbar-toggler-icon"></span>
-            </button>
             <div class="collapse navbar-collapse" id="mynavbar">
-            <form class="d-flex" action="lister_livre.php" method="get">
-                <input class="form-control me-2" type="text" placeholder="Recherche dans le catalogue (saisie du nom de l'auteur)" name="navbar">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Rechercher</button>
-            </form>
-            <?php if(!is_null($session->get('mel'))) : ?>
-                <?php echo 'Utilisateur connecté : ' . $session->get('prenom').'&nbsp;&nbsp;'; ?>
+            <?php $session = session();
+            if(!is_null($session->get('mel'))) : ?>
+                <?php echo 'Utilisateur connecté : ' . $session->get('mel').'&nbsp;&nbsp;'; ?>
                 <a href="<?php echo site_url('sedeconnecter') ?>">Se déconnecter</a>&nbsp;&nbsp;
-                <a href="<?php echo site_url('modifieruncompte') ?>">Créer un compte</a>&nbsp;&nbsp;
+                <a href="<?php echo site_url('modifieruncompte') ?>">Modifier les informations du compte</a>&nbsp;&nbsp;
+                <a href="<?php echo site_url('reservationspourunclient') ?>">Vos reservations</a>&nbsp;&nbsp;
             <?php else : ?>
                 <a href="<?php echo site_url('seconnecter') ?>">Se connecter</a>&nbsp;&nbsp;
-                <a href="<?php echo site_url('creeruncompte') ?>">Créer un compte</a>&nbsp;&nbsp;
-                <a href="<?php echo site_url('liaisonparsecteur') ?>">Liaison par secteur</a>&nbsp;&nbsp;
             <?php endif; ?>
+            <a href="<?php echo site_url('creeruncompte') ?>">Créer un compte</a>&nbsp;&nbsp;
+            <a href="<?php echo site_url('liaisonparsecteur') ?>">Liaison par secteur</a>&nbsp;&nbsp;
             </div>
         </div>
     </nav>

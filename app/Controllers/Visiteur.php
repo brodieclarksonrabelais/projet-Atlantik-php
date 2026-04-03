@@ -61,7 +61,7 @@ class Visiteur extends BaseController
      public function seDeconnecter()
     {
         session()->destroy();
-        returnredirect()->to('seconnecter');
+        return redirect()->to('seconnecter');
     } 
 
     public function ajouterClient()
@@ -126,6 +126,17 @@ class Visiteur extends BaseController
         $donnees['lesTarifs'] = $modTarif/*->getWhere(['noliaison' => $noliaison])*/->getAllTarif($noliaison);
         $donnees['TitreDeLaPage'] = "Liste des tarifs";
         /*$donnees['TitreDeLaPage'] = "Liaison " .$donnees['lesTarifs']-> numliaison. " : " .$donnees['lesTarifs']-> portDepart. " - " .$donnees['lesTarifs']-> portArrivee;*/
+        
+        return view('Templates/Header')
+        . view('Visiteur/vue_TarifsParLiaison', $donnees)
+        . view('Templates/Footer');
+    }
+
+    public function listerPeriode($noliaison)
+    {
+        $modTarif = new ModeleTarif();
+        $donnees['lesPeriodes'] = $modTarif/*->getWhere(['noliaison' => $noliaison])*/->getAllPeriode($noliaison);
+        
         return view('Templates/Header')
         . view('Visiteur/vue_TarifsParLiaison', $donnees)
         . view('Templates/Footer');

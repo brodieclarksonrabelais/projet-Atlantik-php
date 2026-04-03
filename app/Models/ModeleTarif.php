@@ -28,5 +28,14 @@ class ModeleTarif extends Model
         ->get()
         ->getResult();
     }
+
+        public function getAllPeriode($noliaison)
+    {
+        return $this->join('periode p', 'tar.noperiode = p.noperiode',  'inner')
+        ->select('datedebut, datefin')
+        ->where('tar.noliaison', $noliaison)
+        ->getResult();
+    }
+    
 }
 
