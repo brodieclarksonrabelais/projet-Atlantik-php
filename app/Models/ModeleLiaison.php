@@ -20,7 +20,7 @@ class ModeleLiaison extends Model
         ->getResult();
     }
 
-        public function getUneLiaison($noliaison)
+    public function getUneLiaison($noliaison)
     {
         return $this->join('secteur s', 'l.nosecteur = s.nosecteur', 'inner')
         ->join('port pd', 'l.NOPORT_DEPART = pd.NOPORT',  'inner')

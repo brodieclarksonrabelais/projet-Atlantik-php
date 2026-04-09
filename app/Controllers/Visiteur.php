@@ -46,7 +46,7 @@ class Visiteur extends BaseController
         $clientRetourne = $modClient->where($condition)->first();
  
         if ($clientRetourne != null) {
-            $session->set('mel', $clientRetourne->MEL);
+            $session->set('mel', $clientRetourne->MEL, 'noclient', $clientRetourne->noclient);
             $data['Mel'] = $Mel;
             echo view('Templates/Header', $data);
             echo view('Visiteur/vue_ConnexionReussie');
@@ -123,22 +123,18 @@ class Visiteur extends BaseController
     public function tarifsParLiaison($noliaison)
     {
         $modTarif = new ModeleTarif();
-        $donnees['lesTarifs'] = $modTarif/*->getWhere(['noliaison' => $noliaison])*/->getAllTarif($noliaison);
-        $donnees['TitreDeLaPage'] = "Liste des tarifs";
-        /*$donnees['TitreDeLaPage'] = "Liaison " .$donnees['lesTarifs']-> numliaison. " : " .$donnees['lesTarifs']-> portDepart. " - " .$donnees['lesTarifs']-> portArrivee;*/
+            $data['noliaison']  = $noliaison;
+            $data['categories'] = $modTarif->getcategorie();
+            $data['types']      = $modTarif->getype();
+            $data['periodes']   = $modTarif->getperiode();
+            $data['tarifs']     = $modTarif->getAllTarifs($noliaison);
+            $data['nomsports']  = $modTarif->getnomport($noliaison);
+            $data['TitreDeLaPage'] = 'Tarifs de la liaison ' . $noliaison;
+            /*$donnees['TitreDeLaPage'] = "Liaison " .$donnees['lesTarifs']-> numliaison. " : " .$donnees['lesTarifs']-> portDepart. " - " .$donnees['lesTarifs']-> portArrivee;*/
         
         return view('Templates/Header')
-        . view('Visiteur/vue_TarifsParLiaison', $donnees)
+        . view('Visiteur/vue_TarifsParLiaison', $data)
         . view('Templates/Footer');
     }
 
-    public function listerPeriode($noliaison)
-    {
-        $modTarif = new ModeleTarif();
-        $donnees['lesPeriodes'] = $modTarif/*->getWhere(['noliaison' => $noliaison])*/->getAllPeriode($noliaison);
-        
-        return view('Templates/Header')
-        . view('Visiteur/vue_TarifsParLiaison', $donnees)
-        . view('Templates/Footer');
-    }
 }

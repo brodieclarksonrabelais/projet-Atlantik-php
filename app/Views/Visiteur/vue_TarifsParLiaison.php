@@ -28,16 +28,52 @@ foreach ($lesTarifs as $unTarif)
     echo "</TR>";
 }
 echo "</table>";*/
+?>
 
-foreach($lesPeriodes as $unePeriode)
-{
-    echo "<TR>";
-    echo "<TD>".$unePeriode->datedebut."</TD><TD>"
-    .$unePeriode->datefin."</TD>";
-    echo "</TR>";
-    $i += 1;
-}
-echo "</table>";
+<center>
+<h4><?=  $TitreDeLaPage. ' - ' . $nomsports[0]->portDepart . ' -> ' . $nomsports[0]->portArrivee ?> </h4>
+</center>
+<div class="mt-4">
+    <table class="table table-bordered text-center align-middle">
+        <thead class="table-secondary">
+            <tr>
+                <th>Catégorie</th>
+                <th>Type</th>
+                <th colspan="<?= count($periodes) ?>">Périodes</th>
+            </tr>
+            <tr>
+                 <th colspan="2"></th>
+                 <?php
+                    foreach ($periodes as $unePeriode) : ?>
+                        <th><?= $unePeriode->DATEDEBUT. '</br>' . $unePeriode->DATEFIN ?></th>
+                    <?php endforeach; ?>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($categories as $cat) {
+                foreach ($types as $type) {
+                          if ($type->LETTRECATEGORIE !== $cat->LETTRECATEGORIE) continue; 
+                                echo '<tr>';
+                                echo' <td>' . $cat->LETTRECATEGORIE . ' - ' . $cat->libelle. '</td>';
+                                echo '<td>' . $cat->LETTRECATEGORIE . $type->NOTYPE . ' - ' . $type->libelle . '</td>';
+                                foreach($tarifs as $unTarif)
+                                {
+                                    if ($unTarif->LETTRECATEGORIE === $cat->LETTRECATEGORIE && $unTarif->NOTYPE === $type->NOTYPE) 
+                                        {
+                                            foreach ($periodes as $unePeriode) {
+                                            if ($unePeriode->NOPERIODE == $unTarif->NOPERIODE) {
+                                                echo '<td>' . $unTarif->TARIF . ' €</td>';
+                                            }
+                                        }
+                                    }
+                                }                            
+                    echo '</tr>';
+                }
+            } 
+            ?>
+        </tbody>
+    </table>
+</div>
 
 
 ?>

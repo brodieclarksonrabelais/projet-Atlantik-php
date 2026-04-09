@@ -7,6 +7,10 @@ class Client extends BaseController
 {
     public function modifierClient()
     {
+        $session = session();
+        $noclient = $session->get('noclient');
+
+
         $data['TitreDeLaPage'] = 'Modifer vos informations';
         if (!$this->request->is('post')) {
             return view('Templates/Header')
@@ -44,19 +48,19 @@ class Client extends BaseController
             'MOTDEPASSE' => $this->request->getPost('txtMotDePasse'),
         ); 
         $modClient = new ModeleClient();
-        $donnees['clientAjoute'] = $modClient->update($donneesAModifier, false);
+        $donnees['clientAModifier'] = $modClient->where('NOCLIENT', $noclient)->update($noclient,$donneesAModifier, false);
 
         return view('Templates/Header')
-            .view('Visiteur/vue_RapportAjouterClient', $donnees)
+            .view('Client/vue_RapportModifierClient', $donnees)
             .view('Templates/Footer');
     }
 
-        public function reservationsPourUnClient($mel)
+    public function reservationsPourUnClient($mel)
     {
         $data['TitreDeLaPage'] = 'Historique des reservations';
         
         $modClient = new ModeleClient();
-        $donnees['noClient'] = $modClient->whre($mel, 'MEL');
+        $donnees['noClient'] = $modClient->where($mel, 'MEL');
 
         $pager = \Config\Services::pager();
         $modelReservation = new ModeleReservation(); //instanciation du modèle
