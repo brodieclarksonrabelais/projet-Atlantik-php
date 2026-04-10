@@ -137,4 +137,22 @@ class Visiteur extends BaseController
         . view('Templates/Footer');
     }
 
+    public function horairesTraversee()
+    {
+        $modTraversee = new ModeleTraversee();
+        $data['LesSecteurs'] = $modTraversee->getAllSecteur();
+        $data['LesLiaisonsParSecteur'] = $modTraversee->getLiaisonsParSeceteur($nosecteur);
+        $data['Traversees'] = $modTraversee->getAllTraversee($noliaison, $dateheuredepart);
+        $data['CapaciteMax'] = $modTraversee->getCapaciteMax($notraversee, $lettrecategorie);
+        $data['QuantiteEnregistre']  = $modTraversee->getQuantiteEnregistre($notraversee, $lettrecategorie);
+        $data['PlacesDispo'] = $data['CapaciteMax'] - $data['QuantiteEnregistre'];
+
+        $modTarif = new ModeleTarif();
+        $data['categories'] = $modTarif->getcategorie();
+
+        return view('Templates/Header')
+        . view('Visiteur/vue_HorairesTraversee', $data)
+        . view('Templates/Footer');
+    }
+
 }
