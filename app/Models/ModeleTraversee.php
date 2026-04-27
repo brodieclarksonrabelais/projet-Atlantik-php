@@ -42,7 +42,7 @@ class ModeleTraversee extends Model
         ->getResult();
     }
 
-    public function getLiaisonsParSecteur($nosecteur)
+    /*public function getLiaisonsParSecteur($nosecteur)
     {
         return $this->join('liaison l', 'l.noliaison = trav.noliaison', 'inner')
         ->join('secteur s', 'l.nosecteur = s.nosecteur', 'inner')
@@ -52,13 +52,21 @@ class ModeleTraversee extends Model
         ->where('l.nosecteur', $nosecteur)
         ->get()
         ->getResult();
-    }
+    }*/
 
     public function getAllSecteur()
     {
         return  $this->select('s.nosecteur, s.nom')
         ->from('secteur s')
         ->groupby('s.nosecteur')
+        ->get()
+        ->getResult();
+    }
+
+    public function getDatesDepart($noliaison)
+    {
+        return $this->select('dateheuredepart')
+        ->where('noliaison', $noliaison)
         ->get()
         ->getResult();
     }

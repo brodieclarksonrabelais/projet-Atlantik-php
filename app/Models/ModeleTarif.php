@@ -28,22 +28,6 @@ class ModeleTarif extends Model
         ->get()
         ->getResult();
     }*/
-        public function getcategorie()
-        {
-            return $this->select('c.LETTRECATEGORIE, c.libelle')
-                        ->from('categorie c')
-                        ->groupby('c.LETTRECATEGORIE, c.libelle')
-                        ->get()
-                        ->getResult();
-        }
-        
-        public function getype() {
-            return $this->select('ty.NOTYPE, ty.LETTRECATEGORIE, ty.libelle')
-                    ->from('type ty')
-                    ->groupby('ty.NOTYPE, ty.LETTRECATEGORIE, ty.libelle')
-                    ->get()
-                    ->getResult();
-        }
         
         public function getperiode(){
             return $this->select('p.NOPERIODE, p.DATEDEBUT, p.DATEFIN')

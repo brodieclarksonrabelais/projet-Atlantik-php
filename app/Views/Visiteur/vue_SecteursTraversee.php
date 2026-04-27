@@ -11,7 +11,7 @@
     <?php
         foreach ($LesSecteurs as $UnSecteur) 
         {
-            echo '<tr><td>'.anchor('horairestraversee/' .$UnSecteur->nosecteur, $UnSecteur->nom).'</td></tr>';
+            echo '<tr><td>'.anchor('liaisonstraversee/' .$UnSecteur->nosecteur, $UnSecteur->nom).'</td></tr>';
         }
     ?>
     </div>
