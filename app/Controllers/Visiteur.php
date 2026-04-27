@@ -3,6 +3,7 @@ namespace App\Controllers;
 use App\Models\ModeleClient;
 use App\Models\ModeleLiaison;
 use App\Models\ModeleTarif;
+use App\Models\ModeleTraversee;
 helper(['url', 'assets', 'form']);
 
 class Visiteur extends BaseController
@@ -137,11 +138,20 @@ class Visiteur extends BaseController
         . view('Templates/Footer');
     }
 
-    public function horairesTraversee()
+    public function secteursTraversee()
     {
         $modTraversee = new ModeleTraversee();
         $data['LesSecteurs'] = $modTraversee->getAllSecteur();
-        $data['LesLiaisonsParSecteur'] = $modTraversee->getLiaisonsParSeceteur($nosecteur);
+
+        return view('Templates/Header')
+        . view('Visiteur/vue_SecteursTraversee', $data)
+        . view('Templates/Footer');
+    }
+
+    public function horairesTraversee($nosecteur)
+    {
+        $modTraversee = new ModeleTraversee();
+        $data['LesLiaisonsParSecteur'] = $modTraversee->getLiaisonsParSecteur($nosecteur);
         $data['Traversees'] = $modTraversee->getAllTraversee($noliaison, $dateheuredepart);
         $data['CapaciteMax'] = $modTraversee->getCapaciteMax($notraversee, $lettrecategorie);
         $data['QuantiteEnregistre']  = $modTraversee->getQuantiteEnregistre($notraversee, $lettrecategorie);
@@ -154,5 +164,7 @@ class Visiteur extends BaseController
         . view('Visiteur/vue_HorairesTraversee', $data)
         . view('Templates/Footer');
     }
+
+
 
 }

@@ -26,6 +26,7 @@
             <?php endif; ?>
             <a href="<?php echo site_url('creeruncompte') ?>">Créer un compte</a>&nbsp;&nbsp;
             <a href="<?php echo site_url('liaisonparsecteur') ?>">Liaison par secteur</a>&nbsp;&nbsp;
+            <a href="<?php echo site_url('secteurstraversee') ?>">Horaires des traversées</a>&nbsp;&nbsp;
             </div>
         </div>
     </nav>

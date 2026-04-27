@@ -15,6 +15,9 @@ $routes->get('tarifsparliaison', 'Visiteur::tarifsParLiaison');
 $routes->match(['get','post'], 'creeruncompte', 'Visiteur::ajouterClient');
 $routes->match(['get', 'post'],'seconnecter', 'Visiteur::seConnecter');
 $routes->match(['get', 'post'],'sedeconnecter', 'Visiteur::seDeconnecter');
+$routes->get('secteurstraversee', 'Visiteur::secteursTraversee');
+$routes->get('horairestraversee/(:alphanum)', 'Visiteur::horairesTraversee/$1');
+$routes->get('horairestraversee', 'Visiteur::horairesTraversee');
 
 //Client
 $routes->match(['get','post'], 'modifieruncompte', 'Client::modifierClient');

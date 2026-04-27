@@ -48,17 +48,17 @@ class ModeleTraversee extends Model
         ->join('secteur s', 'l.nosecteur = s.nosecteur', 'inner')
         ->join('port pd', 'l.NOPORT_DEPART = pd.NOPORT',  'inner')
         ->join('port pa', 'l.NOPORT_ARRIVEE = pa.NOPORT',  'inner')
-        ->select('noliaison, pd.NOM as portDepart, pa.NOM as portArrivee, s.NOM as nomsecteur, NOPORT_DEPART, NOPORT_ARRIVEE, DISTANCE, s.NOSECTEUR')
-        ->where('nosecteur', $nosecteur)
+        ->select('l.noliaison, pd.NOM as portDepart, pa.NOM as portArrivee, s.NOM as nomsecteur, NOPORT_DEPART, NOPORT_ARRIVEE, DISTANCE, s.NOSECTEUR')
+        ->where('l.nosecteur', $nosecteur)
         ->get()
         ->getResult();
     }
 
     public function getAllSecteur()
     {
-        return $this->join('liaison l', 'l.noliaison = trav.noliaison', 'inner')
-        ->join('secteur s', 'l.nosecteur = s.nosecteur', 'inner')
-        ->select('nosecteur, nom')
+        return  $this->select('s.nosecteur, s.nom')
+        ->from('secteur s')
+        ->groupby('s.nosecteur')
         ->get()
         ->getResult();
     }

@@ -30,9 +30,7 @@ foreach ($lesTarifs as $unTarif)
 echo "</table>";*/
 ?>
 
-<center>
 <h4><?=  $TitreDeLaPage. ' - ' . $nomsports[0]->portDepart . ' -> ' . $nomsports[0]->portArrivee ?> </h4>
-</center>
 <div class="mt-4">
     <table class="table table-bordered text-center align-middle">
         <thead class="table-secondary">
@@ -52,7 +50,7 @@ echo "</table>";*/
         <tbody>
             <?php foreach ($categories as $cat) {
                 foreach ($types as $type) {
-                          if ($type->LETTRECATEGORIE !== $cat->LETTRECATEGORIE) continue; 
+                          if ($type->LETTRECATEGORIE !== $cat->LETTRECATEGORIE); 
                                 echo '<tr>';
                                 echo' <td>' . $cat->LETTRECATEGORIE . ' - ' . $cat->libelle. '</td>';
                                 echo '<td>' . $cat->LETTRECATEGORIE . $type->NOTYPE . ' - ' . $type->libelle . '</td>';
