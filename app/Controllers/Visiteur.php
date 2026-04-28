@@ -4,6 +4,7 @@ use App\Models\ModeleClient;
 use App\Models\ModeleLiaison;
 use App\Models\ModeleTarif;
 use App\Models\ModeleTraversee;
+use App\Models\ModeleCategorie;
 helper(['url', 'assets', 'form']);
 
 class Visiteur extends BaseController
@@ -148,16 +149,32 @@ class Visiteur extends BaseController
         . view('Templates/Footer');
     }
 
+    public function liaisonsEtDatesTraversee($nosecteur)
+    {
+        $data['LesDatesDeDepart '] = $this->request->getPost('lesDatesDeDepart');
+        $data['liaisonstraversee '] = $this->request->getPost('liaisonstraversee');
 
-    public function horairesTraversee($noliaison, $dateheuredepart)
+        $modTraversee = new ModeleTraversee();
+        $data['LesSecteurs'] = $modTraversee->getAllSecteur();
+
+        $modLiaison = new ModeleLiaison();
+        $data['LesLiaisonsParSecteur'] = $modLiaison->getLiaisonsParSecteur($nosecteur);
+
+        $data['LesTraversees'] = $modTraversee->getAllTraversee();
+
+        $modCategorie = new ModeleCategorie();
+        $data['LesCategories'] = $modCategorie->findAll();
+
+        return view('Templates/Header')
+        . view('Visiteur/vue_SecteursTraversee', $data)
+        . view('Visiteur/vue_LiaisonsTraversee', $data)
+        . view('Templates/Footer');
+    }
+
+    /*public function horairesTraversee($noliaison, $dateheuredepart)
     {
         $modTraversee = new ModeleTraversee();
         $data['LesSecteurs'] = $modTraversee->getAllSecteur();
-        
-        $modLiaison = new ModeleLiaison();
-        $data['LesLiaisonsParSecteur'] = $modLiaison->getLiaisonsParSecteur($nosecteur);
-        $dateheuredepart = $this->request->getPost('LesDatesDeDepart');
-        
         $data['Traversees'] = $modTraversee->getAllTraversee($noliaison, $dateheuredepart);
         $data['CapaciteMax'] = $modTraversee->getCapaciteMax($notraversee, $lettrecategorie);
         $data['QuantiteEnregistre']  = $modTraversee->getQuantiteEnregistre($notraversee, $lettrecategorie);
@@ -169,8 +186,9 @@ class Visiteur extends BaseController
 
         return view('Templates/Header')
         . view('Visiteur/vue_SecteursTraversee', $data)
+        . view('Visiteur/vue_LiaisonsTraversee', $data)
         . view('Visiteur/vue_HorairesTraversee', $data)
         . view('Templates/Footer');
-    }
+    }*/
 
 }

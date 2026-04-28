@@ -10,12 +10,20 @@ class ModeleTraversee extends Model
     protected $returnType = 'object'; 
     protected $allowedFields = ['noliaison', 'nobateau', 'dateheuredepart', 'dateheurearrivee'];
 
-    public function getAllTraversee($noliaison, $dateheuredepart)
+    public function getTraverseeParLiaisonEtDate($noliaison, $dateheuredepart)
     {
         return $this->join('bateau b', 't.nobateau = b.nobateau','inner')
         ->select('notraversee, nom, TIME(dateheuredepart) as dateDepart')
         ->where($noliaison, 'noliaison')
         ->where(DATE($dateheuredepart), 'DATE(dateheuredepart)')
+        ->get()
+        ->getResult();
+    }
+
+    public function getAllTraversee()
+    {
+        return $this->join('bateau b', 'trav.nobateau = b.nobateau','inner')
+        ->select('notraversee, nom, TIME(dateheuredepart) as dateDepart')
         ->get()
         ->getResult();
     }
