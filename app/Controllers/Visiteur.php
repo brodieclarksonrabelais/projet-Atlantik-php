@@ -148,27 +148,16 @@ class Visiteur extends BaseController
         . view('Templates/Footer');
     }
 
-    public function liaisonsEtDatesTraversee($nosecteur)
-    {
-        $modTraversee = new ModeleTraversee();
-        $data['LesSecteurs'] = $modTraversee->getAllSecteur();
-
-        $modLiaison = new ModeleLiaison();
-        $data['LesLiaisonsParSecteur'] = $modLiaison->getLiaisonsParSecteur($nosecteur);
-
-        $dateheuredepart = $this->request->getPost('LesDatesDeDepart');
-
-        return view('Templates/Header')
-        . view('Visiteur/vue_SecteursTraversee', $data)
-        . view('Visiteur/vue_LiaisonsTraversee', $data)
-        . view('Templates/Footer');
-    }
 
     public function horairesTraversee($noliaison, $dateheuredepart)
     {
         $modTraversee = new ModeleTraversee();
         $data['LesSecteurs'] = $modTraversee->getAllSecteur();
-        $data['DatesDeDepart'] = $modTraversee->getDatesDepart($noliaison);
+        
+        $modLiaison = new ModeleLiaison();
+        $data['LesLiaisonsParSecteur'] = $modLiaison->getLiaisonsParSecteur($nosecteur);
+        $dateheuredepart = $this->request->getPost('LesDatesDeDepart');
+        
         $data['Traversees'] = $modTraversee->getAllTraversee($noliaison, $dateheuredepart);
         $data['CapaciteMax'] = $modTraversee->getCapaciteMax($notraversee, $lettrecategorie);
         $data['QuantiteEnregistre']  = $modTraversee->getQuantiteEnregistre($notraversee, $lettrecategorie);
@@ -180,7 +169,6 @@ class Visiteur extends BaseController
 
         return view('Templates/Header')
         . view('Visiteur/vue_SecteursTraversee', $data)
-        . view('Visiteur/vue_LiaisonsTraversee', $data)
         . view('Visiteur/vue_HorairesTraversee', $data)
         . view('Templates/Footer');
     }

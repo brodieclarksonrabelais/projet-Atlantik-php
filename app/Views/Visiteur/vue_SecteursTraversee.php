@@ -7,13 +7,11 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-    <div class="card bg-light text-white shadow" style="width:400px">
+    <div class="card bg-light text-white shadow col-md-2">
     <?php
         foreach ($LesSecteurs as $UnSecteur) 
         {
-            echo '<tr><td>'.anchor('liaisonstraversee/' .$UnSecteur->nosecteur, $UnSecteur->nom).'</td></tr>';
+            echo '<tr><td>'.anchor('horairestraversee/' .$UnSecteur->nosecteur, $UnSecteur->nom).'</td></tr>';
         }
     ?>
     </div>
-</body>
-</html>
