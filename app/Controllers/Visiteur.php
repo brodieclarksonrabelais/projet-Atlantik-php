@@ -48,7 +48,8 @@ class Visiteur extends BaseController
         $clientRetourne = $modClient->where($condition)->first();
  
         if ($clientRetourne != null) {
-            $session->set('mel', $clientRetourne->MEL, 'noclient', $clientRetourne->noclient);
+            $session->set('noclient', $clientRetourne->noclient);
+            $session->set('mel', $clientRetourne->MEL);
             $data['Mel'] = $Mel;
             echo view('Templates/Header', $data);
             echo view('Visiteur/vue_ConnexionReussie');
@@ -149,46 +150,26 @@ class Visiteur extends BaseController
         . view('Templates/Footer');
     }
 
-    public function liaisonsEtDatesTraversee($nosecteur)
+    public function horairesTraversee($nosecteur)
     {
-        $data['LesDatesDeDepart '] = $this->request->getPost('lesDatesDeDepart');
-        $data['liaisonstraversee '] = $this->request->getPost('liaisonstraversee');
-
         $modTraversee = new ModeleTraversee();
         $data['LesSecteurs'] = $modTraversee->getAllSecteur();
 
         $modLiaison = new ModeleLiaison();
         $data['LesLiaisonsParSecteur'] = $modLiaison->getLiaisonsParSecteur($nosecteur);
-
         $data['LesTraversees'] = $modTraversee->getAllTraversee();
+        /*$data['CapaciteMax'] = $modTraversee->getCapaciteMax($notraversee, $lettrecategorie);
+        $data['QuantiteEnregistre']  = $modTraversee->getQuantiteEnregistre($notraversee, $lettrecategorie);
+        $data['PlacesDispo'] = $data['CapaciteMax'] - $data['QuantiteEnregistre'];*/
 
         $modCategorie = new ModeleCategorie();
         $data['LesCategories'] = $modCategorie->findAll();
 
         return view('Templates/Header')
         . view('Visiteur/vue_SecteursTraversee', $data)
-        . view('Visiteur/vue_LiaisonsTraversee', $data)
+        . view('Visiteur/vue_HorairesTraversee', $data)
         . view('Templates/Footer');
     }
 
-    /*public function horairesTraversee($noliaison, $dateheuredepart)
-    {
-        $modTraversee = new ModeleTraversee();
-        $data['LesSecteurs'] = $modTraversee->getAllSecteur();
-        $data['Traversees'] = $modTraversee->getAllTraversee($noliaison, $dateheuredepart);
-        $data['CapaciteMax'] = $modTraversee->getCapaciteMax($notraversee, $lettrecategorie);
-        $data['QuantiteEnregistre']  = $modTraversee->getQuantiteEnregistre($notraversee, $lettrecategorie);
-        $data['PlacesDispo'] = $data['CapaciteMax'] - $data['QuantiteEnregistre'];
-
-        $modCategorie = new ModeleCategorie();
-        $data['LesCategories'] = $modCategorie->findAll();
-        $data['LesTypes'] = $modCategorie->getype();
-
-        return view('Templates/Header')
-        . view('Visiteur/vue_SecteursTraversee', $data)
-        . view('Visiteur/vue_LiaisonsTraversee', $data)
-        . view('Visiteur/vue_HorairesTraversee', $data)
-        . view('Templates/Footer');
-    }*/
 
 }
