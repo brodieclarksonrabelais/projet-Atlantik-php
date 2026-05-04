@@ -48,8 +48,8 @@ class Visiteur extends BaseController
         $clientRetourne = $modClient->where($condition)->first();
  
         if ($clientRetourne != null) {
-            $session->set('noclient', $clientRetourne->noclient);
             $session->set('mel', $clientRetourne->MEL);
+            $session->set('noclient', $clientRetourne->NOCLIENT);
             $data['Mel'] = $Mel;
             echo view('Templates/Header', $data);
             echo view('Visiteur/vue_ConnexionReussie');
@@ -154,6 +154,9 @@ class Visiteur extends BaseController
     {
         $modTraversee = new ModeleTraversee();
         $data['LesSecteurs'] = $modTraversee->getAllSecteur();
+
+        $session->set('noliaison',$this->request->getPost('liaisons'));
+        $session->set('dateDepart',$this->request->getPost('datedepart'));
 
         $modLiaison = new ModeleLiaison();
         $data['LesLiaisonsParSecteur'] = $modLiaison->getLiaisonsParSecteur($nosecteur);

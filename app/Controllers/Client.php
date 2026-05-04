@@ -8,7 +8,7 @@ class Client extends BaseController
     public function modifierClient()
     {
         $session = session();
-        $noclient = $session->get('noclient');
+        $session->set('noclient');
 
 
         $data['TitreDeLaPage'] = 'Modifer vos informations';

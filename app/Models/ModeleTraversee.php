@@ -13,7 +13,7 @@ class ModeleTraversee extends Model
     public function getTraverseeParLiaisonEtDate($noliaison, $dateheuredepart)
     {
         return $this->join('bateau b', 't.nobateau = b.nobateau','inner')
-        ->select('notraversee, nom, TIME(dateheuredepart) as dateDepart')
+        ->select('notraversee, noliaison, nom, TIME(dateheuredepart) as dateDepart')
         ->where($noliaison, 'noliaison')
         ->where(DATE($dateheuredepart), 'DATE(dateheuredepart)')
         ->get()
@@ -23,7 +23,7 @@ class ModeleTraversee extends Model
     public function getAllTraversee()
     {
         return $this->join('bateau b', 'trav.nobateau = b.nobateau','inner')
-        ->select('notraversee, nom, TIME(dateheuredepart) as dateDepart')
+        ->select('notraversee, noliaison, nom, DATE(dateheuredepart) as dateDepart, TIME(dateheuredepart) as heureDepart')
         ->get()
         ->getResult();
     }

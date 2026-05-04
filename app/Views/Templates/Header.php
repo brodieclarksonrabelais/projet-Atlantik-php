@@ -18,6 +18,7 @@
             <?php $session = session();
             if(!is_null($session->get('mel'))) : ?>
                 <?php echo 'Utilisateur connecté : ' . $session->get('mel').'&nbsp;&nbsp;'; ?>
+                <?php echo 'Num client : ' . $session->get('noclient').'&nbsp;&nbsp;'; ?>
                 <a href="<?php echo site_url('sedeconnecter') ?>">Se déconnecter</a>&nbsp;&nbsp;
                 <a href="<?php echo site_url('modifieruncompte') ?>">Modifier les informations du compte</a>&nbsp;&nbsp;
                 <a href="<?php echo site_url('reservationspourunclient') ?>">Vos reservations</a>&nbsp;&nbsp;

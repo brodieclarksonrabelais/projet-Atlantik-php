@@ -7,7 +7,7 @@
                         {
                             foreach($LesLiaisonsParSecteur as $UneLiaison)
                             {
-                                echo "<option value='" . $UneLiaison->noliaison . "'>" . $UneLiaison->portDepart . " - " . $UneLiaison->portArrivee . "</option>";
+                                echo "<option value='" . $UneLiaison->noliaison . "'>" . $UneLiaison->portDepart . " -> " . $UneLiaison->portArrivee . "</option>";
                             }
                         }
                         else
@@ -41,14 +41,24 @@
                         {
                             echo '<th>' .$UneCategorie->LETTRECATEGORIE. '<br/>' .$UneCategorie->LIBELLE. '</th>';
                         }
-                    echo '</tr></thead>';
-                
-                foreach($LesTraversees as $UneTraversee)
-                {
-                    echo "<tr><td>" .$UneTraversee->notraversee."</td><td>"
-                    .$UneTraversee->dateDepart."</td><td>"
-                    .$UneTraversee->nom."</td><tr/>";
-                }
+                echo '</tr></thead>';
+                    
+                if($_POST['liaisons'] == null ||  $_POST['datedepart'] == null)
+                        {
+                            echo "La date ou la liaison n'a pas été séléctionné";
+                        }
+                        else
+                        {    
+                            foreach($LesTraversees as $UneTraversee)
+                            {
+                                if($_POST['liaisons'] == $UneTraversee->noliaison &&  $_POST['datedepart'] == $UneTraversee->dateDepart)
+                                {
+                                    echo "<tr><td>" .$UneTraversee->notraversee."</td><td>"
+                                    .$UneTraversee->heureDepart."</td><td>"
+                                    .$UneTraversee->nom."</td><tr/>";
+                                }
+                            }
+                        }
                 echo '</table><div>';
         }
         ?>
