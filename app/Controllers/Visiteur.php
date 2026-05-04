@@ -155,8 +155,8 @@ class Visiteur extends BaseController
         $modTraversee = new ModeleTraversee();
         $data['LesSecteurs'] = $modTraversee->getAllSecteur();
 
-        $session->set('noliaison',$this->request->getPost('liaisons'));
-        $session->set('dateDepart',$this->request->getPost('datedepart'));
+        //$session->set('noliaison',$this->request->getPost('liaisons'));
+        //$session->set('dateDepart',$this->request->getPost('datedepart'));
 
         $modLiaison = new ModeleLiaison();
         $data['LesLiaisonsParSecteur'] = $modLiaison->getLiaisonsParSecteur($nosecteur);
@@ -174,5 +174,14 @@ class Visiteur extends BaseController
         . view('Templates/Footer');
     }
 
+    public function reservationTraversee($notraversee)
+    {
+        $modCategorie = new ModeleCategorie();
+        $data['LesTypes'] = $modCategorie->getAllType();
+
+        $modTarif = new ModeleTarif();
+        $data['LesTarifs'] = $modTarif->findAll();
+
+    }
 
 }

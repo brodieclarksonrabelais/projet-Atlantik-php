@@ -55,6 +55,16 @@ class ModeleTarif extends Model
                 ->get()
                 ->getResult();
         }
+
+        public function getAllType() 
+        {     
+            return $this->select('tarif, ty.notype, ty.lettrecategorie, ty.libelle')
+            ->from('type ty')
+            ->join('tarifer tar', 'ty.NOTYPE = tar.NOTYPE')
+            ->groupby('ty.notype, ty.lettrecategorie, ty.libelle')
+            ->get()
+            ->getResult();
+        }
     
 }
 

@@ -18,9 +18,10 @@ $routes->match(['get', 'post'],'sedeconnecter', 'Visiteur::seDeconnecter');
 $routes->get('secteurstraversee', 'Visiteur::secteursTraversee');
 //$routes->get('liaisonstraversee/(:alphanum)', 'Visiteur::liaisonsEtDatesTraversee/$1');
 $routes->match(['get', 'post'], 'horairestraversee/(:alphanum)', 'Visiteur::horairesTraversee/$1');
-
+ 
 
 //Client
 $routes->match(['get','post'], 'modifieruncompte', 'Client::modifierClient');
 $routes->get('reservationspourunclient/(:alphanum)', 'Client::reservationsPourUnClient/$1');
 $routes->get('reservationspourunclient', 'Client::reservationsPourUnClient');
+$routes->match(['get', 'post'], 'reservationtraversee/(:alphanum)', 'Visiteur::reservationTraversee/$1');

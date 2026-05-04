@@ -53,7 +53,7 @@
                             {
                                 if($_POST['liaisons'] == $UneTraversee->noliaison &&  $_POST['datedepart'] == $UneTraversee->dateDepart)
                                 {
-                                    echo "<tr><td>" .$UneTraversee->notraversee."</td><td>"
+                                    echo "<tr><td>" .anchor('reservationtraversee/'.$UneTraversee->notraversee ,$UneTraversee->notraversee)."</td><td>"
                                     .$UneTraversee->heureDepart."</td><td>"
                                     .$UneTraversee->nom."</td><tr/>";
                                 }
