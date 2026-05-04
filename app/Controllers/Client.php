@@ -7,9 +7,6 @@ class Client extends BaseController
 {
     public function modifierClient()
     {
-        $session = session();
-        $session->set('noclient');
-
 
         $data['TitreDeLaPage'] = 'Modifer vos informations';
         if (!$this->request->is('post')) {
@@ -48,7 +45,8 @@ class Client extends BaseController
             'MOTDEPASSE' => $this->request->getPost('txtMotDePasse'),
         ); 
         $modClient = new ModeleClient();
-        $donnees['clientAModifier'] = $modClient->where('NOCLIENT', $noclient)->update($noclient,$donneesAModifier, false);
+        $condition = ['NOCLIENT'=>$session->get('noclient')];
+        $donnees['clientAModifier'] = $modClient->where($condition)->update($noclient,$donneesAModifier, false);
 
         return view('Templates/Header')
             .view('Client/vue_RapportModifierClient', $donnees)
