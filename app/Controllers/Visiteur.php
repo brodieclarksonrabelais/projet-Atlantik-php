@@ -176,12 +176,25 @@ class Visiteur extends BaseController
 
     public function reservationTraversee($notraversee)
     {
-        $modCategorie = new ModeleCategorie();
-        $data['LesTypes'] = $modCategorie->getAllType();
+        $modTraversee = new ModeleTraversee();
+        $data['LiaisonPourTraversee'] = $modTraversee->getNoLiaisonPourUneTraversee($notraversee);
+        $data['LaTraversee'] = $modTraversee->where(['notraversee' => $notraversee])->first();
+
+        if(isset($noclient))
+            {
+                $modClient = new ModeleClient();
+                $data['InfosClient'] = modClient->where(['noclient' => $noclient])->first();
+            }
+        
+        /*$noliaison = $modTraversee->getNoLiaisonPourUneTraversee($notraversee);
+        $datedepart = $modTraversee->getDateDepartPourUneTraversee($notraversee);
 
         $modTarif = new ModeleTarif();
-        $data['LesTarifs'] = $modTarif->findAll();
-
+        $data['LesTarifsParType'] = $modTarif->getAllTypeEtTarif($noliaison, $datedepart);*/
+        
+        return view('Templates/Header')
+        . view('Visiteur/vue_ReservationTraversee', $data)
+        . view('Templates/Footer');
     }
 
 }

@@ -78,5 +78,22 @@ class ModeleTraversee extends Model
         ->get()
         ->getResult();
     }
+
+    public function getNoLiaisonPourUneTraversee($notraversee)
+    {
+        return  $this->select('noliaison')
+        ->where('notraversee', $notraversee)
+        ->get()
+        ->getResult();
+    }
+
+    public function getDateDepartPourUneTraversee($notraversee)
+    
+    {
+        return $this->select('DATE(dateheuredepart)')
+        ->where('notraversee', $notraversee)
+        ->get()
+        ->getResult();
+    }
     
 }

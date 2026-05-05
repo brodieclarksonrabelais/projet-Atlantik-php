@@ -7,25 +7,27 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-    <form method="post">
-        <table border=1>
-            <tr>
-                <th>Type</th>
-                <th>Tarif en €</th>
-                <th>Quantité</th>
-            </tr>
-                <?php foreach($LesTypes as $UnType)
-                    {
-                        echo '<tr><td>' .$UnType->libelle. '</td>';
-                        
-                        echo '<td><input type="text" name="quantite" size="10"/></td>';
-                        echo'</tr>';
-                    }
-                ?>
-            </tr>
-    </table>
-    <br/>
-    <input type="submit" value="Valider panier">
-    </form>
+    <div>
+        <?php //echo 'Liaison : ' .$LiaisonPourTraversee->  .'<br/>';
+        echo 'Traversée n° : '.$LaTraversee->notraversee. ' le '.$LaTraversee->dateheuredepart.'<br/>';
+        echo 'Saisir les informations relatives à la réservation';
+        ?>
+    </div>
+    <div>
+        <?php if(isset($noclient))
+            {
+                echo 'Nom : '.$InfosClient->nom. ' Prenom : '.$InfosClient->prenom.'<br/>';
+                echo 'Adresse : '.$InfosClient->adresse.'<br/>';
+                echo 'CodePostal : '.$InfosClient->codepostal. ' Ville : '.$InfosClient->ville.'<br/>';
+            }
+            else
+            {
+                echo'Vous devez vous connecter avant de réserver';
+            }
+        ?>
+    </div>
+    <div>
+        
+    </div>
 </body>
 </html>

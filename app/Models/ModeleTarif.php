@@ -65,6 +65,19 @@ class ModeleTarif extends Model
             ->get()
             ->getResult();
         }
+
+        public function getAllTypeEtTarif($noliaison, $datedepart) 
+        {     
+            return $this->select('tarif, ty.notype, ty.lettrecategorie, ty.libelle')
+            ->join('type ty', 'ty.notype = tar.notype AND ty.lettrecategorie = tar.lettrecategorie')
+            ->join('periode p', 'p.noperiode = tar.noperiode')
+            ->where('tar.noliaison', $noliaison)
+            ->where('datedebut'<= $datedepart) 
+            ->where('datefin'>= $datedepart)
+            ->groupby('ty.notype, ty.lettrecategorie')
+            ->get()
+            ->getResult();
+        }
     
 }
 
