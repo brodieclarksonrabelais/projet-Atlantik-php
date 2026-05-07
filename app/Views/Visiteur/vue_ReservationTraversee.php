@@ -7,27 +7,46 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-    <div>
+    <div class="card bg-light shadow col-md-5">
         <?php //echo 'Liaison : ' .$LiaisonPourTraversee->  .'<br/>';
-        echo 'Traversée n° : '.$LaTraversee->notraversee. ' le '.$LaTraversee->dateheuredepart.'<br/>';
-        echo 'Saisir les informations relatives à la réservation';
+        echo 'Traversée n° : '.$LaTraversee->NOTRAVERSEE. ', départ le '.$LaTraversee->DATEHEUREDEPART.'<br/>';
         ?>
     </div>
-    <div>
-        <?php if(isset($noclient))
+    <div class="card bg-light shadow col-md-5">
+        <?php if(isset($_SESSION['noclient']))
             {
-                echo 'Nom : '.$InfosClient->nom. ' Prenom : '.$InfosClient->prenom.'<br/>';
-                echo 'Adresse : '.$InfosClient->adresse.'<br/>';
-                echo 'CodePostal : '.$InfosClient->codepostal. ' Ville : '.$InfosClient->ville.'<br/>';
+                echo 'Nom : '.$InfosClient->NOM. ' , Prenom : '.$InfosClient->PRENOM.'<br/>';
+                echo 'Adresse : '.$InfosClient->ADRESSE.'<br/>';
+                echo 'CodePostal : '.$InfosClient->CODEPOSTAL. ' , Ville : '.$InfosClient->VILLE.'<br/>';
             }
             else
             {
-                echo'Vous devez vous connecter avant de réserver';
+                echo'Vous devez vous connecter avant de réserver <br/>';
             }
+                echo 'Saisissez les informations relatives à la réservation <br/>';
         ?>
     </div>
     <div>
-        
+        <form method="post">
+            <table border=1>
+                <tr>
+                    <th>Type</th>
+                    <th>Tarif en €</th>
+                    <th>Quantité</th>
+                </tr>
+                    <?php foreach($LesTarifsParType as $TarifEtType)
+                        {
+                            echo '<tr><td>' .$TarifEtType->LIBELLE. '</td>';
+                            echo '<td>' .$TarifEtType->tarif. '</td>';
+                            echo '<td><input type="text" name="quantite" size="10"/></td>';
+                            echo'</tr>';
+                        }
+                    ?>
+                </tr>
+        </table>
+        <br/>
+        <input type="submit" value="Valider panier">
+        </form>
     </div>
 </body>
 </html>

@@ -16,7 +16,7 @@
                         }
                     ?>
                 </select>
-                <input type="date" name="datedepart">
+                <input type="date" name="datedepart"><br/><br/>
                 <input type="submit" name="affichertraversees" value="Afficher les traversées">
             </form>
         </div>

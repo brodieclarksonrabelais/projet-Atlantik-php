@@ -84,7 +84,7 @@ class ModeleTraversee extends Model
         return  $this->select('noliaison')
         ->where('notraversee', $notraversee)
         ->get()
-        ->getResult();
+        ->getRow();
     }
 
     public function getDateDepartPourUneTraversee($notraversee)
@@ -93,7 +93,7 @@ class ModeleTraversee extends Model
         return $this->select('DATE(dateheuredepart)')
         ->where('notraversee', $notraversee)
         ->get()
-        ->getResult();
+        ->getRow();
     }
     
 }

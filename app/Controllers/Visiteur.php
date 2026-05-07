@@ -7,6 +7,8 @@ use App\Models\ModeleTraversee;
 use App\Models\ModeleCategorie;
 helper(['url', 'assets', 'form']);
 
+$session = session();
+
 class Visiteur extends BaseController
 {
     public function accueil()
@@ -180,17 +182,16 @@ class Visiteur extends BaseController
         $data['LiaisonPourTraversee'] = $modTraversee->getNoLiaisonPourUneTraversee($notraversee);
         $data['LaTraversee'] = $modTraversee->where(['notraversee' => $notraversee])->first();
 
-        if(isset($noclient))
-            {
-                $modClient = new ModeleClient();
-                $data['InfosClient'] = modClient->where(['noclient' => $noclient])->first();
-            }
+        $modClient = new ModeleClient();
+        $data['InfosClient'] = $modClient->where(['NOCLIENT' => $_SESSION['noclient']])->first();
         
         /*$noliaison = $modTraversee->getNoLiaisonPourUneTraversee($notraversee);
-        $datedepart = $modTraversee->getDateDepartPourUneTraversee($notraversee);
+        $datedepart = $modTraversee->getDateDepartPourUneTraversee($notraversee);*/
+        $noliaison = $session->get('NOLIAISON');
+        $datedepart = $session->get('DATE(DATEHEUREDEPART)');
 
         $modTarif = new ModeleTarif();
-        $data['LesTarifsParType'] = $modTarif->getAllTypeEtTarif($noliaison, $datedepart);*/
+        $data['LesTarifsParType'] = $modTarif->getAllTypeEtTarif(1, "2021-07-10");
         
         return view('Templates/Header')
         . view('Visiteur/vue_ReservationTraversee', $data)
