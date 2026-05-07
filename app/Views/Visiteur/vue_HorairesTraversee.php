@@ -3,6 +3,7 @@
                 <h3>Sélectionner la liaison et la date souhaitée</h3>
                 <select name = "liaisons">
                     <?php
+                    $session = session();
                         if (isset($LesLiaisonsParSecteur))
                         {
                             foreach($LesLiaisonsParSecteur as $UneLiaison)
@@ -56,6 +57,8 @@
                                     echo "<tr><td>" .anchor('reservationtraversee/'.$UneTraversee->notraversee ,$UneTraversee->notraversee)."</td><td>"
                                     .$UneTraversee->heureDepart."</td><td>"
                                     .$UneTraversee->nom."</td><tr/>";
+                                    $session->set('noliaison', $UneTraversee->noliaison);
+                                    $session->set('dateDepart', $UneTraversee->dateDepart);
                                 }
                             }
                         }

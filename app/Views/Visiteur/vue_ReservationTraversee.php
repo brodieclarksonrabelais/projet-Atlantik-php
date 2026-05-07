@@ -28,12 +28,14 @@
     </div>
     <div>
         <form method="post">
-            <table border=1>
+            <table class="table">
+                <thead class="table-dark">
                 <tr>
                     <th>Type</th>
                     <th>Tarif en €</th>
                     <th>Quantité</th>
                 </tr>
+                </thead>
                     <?php foreach($LesTarifsParType as $TarifEtType)
                         {
                             echo '<tr><td>' .$TarifEtType->LIBELLE. '</td>';
