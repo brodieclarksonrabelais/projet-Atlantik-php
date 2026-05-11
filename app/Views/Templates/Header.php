@@ -9,8 +9,8 @@
     <title>Atlantik</title>
 </head>
 <body>
-<div class="p-2 bg-primary text-white text-center">
-  <h1>Atlantik</h1>
+<div class="p-2 bg-dark text-white text-center">
+  <h1><a href="<?php echo site_url('accueil') ?>">Atlantik</a>&nbsp;&nbsp</h1>
     <nav  class="navbar navbar-expand-sm navbar-dark bg-dark">
         <div class="container-fluid">
             <a class="navbar-brand" href="javascript:void(0)"> <a href="index.php"></a></a>

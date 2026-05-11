@@ -25,7 +25,7 @@ class FiltreClient implements FilterInterface
      */
     public function before(RequestInterface $request, $arguments = null)
     {
-        if(session()->get('noclient')!= null) {
+        if(session()->get('noclient')== null) {
             /* si profil n'est pas SuperAdministrateur on redirige vers le formulaire de connexion */
             return redirect()->to(base_url('seconnecter'));
           }

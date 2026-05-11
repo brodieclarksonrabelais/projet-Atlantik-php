@@ -16,12 +16,15 @@ $routes->match(['get','post'], 'creeruncompte', 'Visiteur::ajouterClient');
 $routes->match(['get', 'post'],'seconnecter', 'Visiteur::seConnecter');
 $routes->match(['get', 'post'],'sedeconnecter', 'Visiteur::seDeconnecter');
 $routes->get('secteurstraversee', 'Visiteur::secteursTraversee');
-//$routes->get('liaisonstraversee/(:alphanum)', 'Visiteur::liaisonsEtDatesTraversee/$1');
 $routes->match(['get', 'post'], 'horairestraversee/(:alphanum)', 'Visiteur::horairesTraversee/$1');
+
  
 
 //Client
-$routes->match(['get','post'], 'modifieruncompte', 'Client::modifierClient', ["filter"=> "filtreclient"]);
-$routes->get('reservationspourunclient/(:alphanum)', 'Client::reservationsPourUnClient/$1', ["filter"=> "filtreclient"]);
-$routes->get('reservationspourunclient', 'Client::reservationsPourUnClient', ["filter"=> "filtreclient"]);
-$routes->match(['get', 'post'], 'reservationtraversee/(:alphanum)', 'Visiteur::reservationTraversee/$1');
+$routes->match(['get','post'], 'modifieruncompte', 'Client::modifierClient', ["filter" => "filtreclient"]);
+$routes->get('reservationspourunclient/(:alphanum)', 'Client::reservationsPourUnClient/$1', ["filter" => "filtreclient"]);
+$routes->get('reservationspourunclient', 'Client::reservationsPourUnClient', ["filter" => "filtreclient"]);
+$routes->match(['get', 'post'], 'reservationtraversee/(:alphanum)', 'Client::reservationTraversee/$1', ["filter" => "filtreclient"]);
+
+
+

@@ -5,6 +5,7 @@ use App\Models\ModeleLiaison;
 use App\Models\ModeleTarif;
 use App\Models\ModeleTraversee;
 use App\Models\ModeleCategorie;
+use App\Models\ModeleEnregistrer;
 helper(['url', 'assets', 'form']);
 
 $session = session();
@@ -207,12 +208,24 @@ class Visiteur extends BaseController
         $reglesValidation = [
             'quantite' => 'required|integer|max_length[60]',
         ];
-        if (!$this->validate($reglesValidation)) {
+
+                if (!$this->validate($reglesValidation)) {
             $data['TitreDeLaPage'] = "Saisie incorrecte";
             return view('Templates/Header')
             . view('Visiteur/vue_ReservationTraversee', $data)
             . view('Templates/Footer');
         }
+
+        /*foreach($data['LesTarifsParType'] as $UnTarifParType)
+            {
+                $donneesAInserer = [
+                    'LETTRECATEGORIE' => $UnTarifParType['LETTRECATEGORIE'],
+                    'NOTYPE' => $UnTarifParType['NOTYPE'],
+                    'QUANTITERESERVEE' => $this->request->getPost('quantite'),
+                ]; 
+                $modEnregistrer = new ModeleEnregistrer;
+                $donnees['EnregistrementAjoute'] = $modEnregistrer->insert($donneesAInserer, false);
+            }*/
         
         return view('Templates/Header')
         . view('Visiteur/vue_ReservationTraversee', $data)

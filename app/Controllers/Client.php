@@ -1,10 +1,61 @@
 <?php
 namespace App\Controllers;
 use App\Models\ModeleClient;
+use App\Models\ModeleLiaison;
+use App\Models\ModeleTarif;
+use App\Models\ModeleTraversee;
+use App\Models\ModeleCategorie;
+use App\Models\ModeleEnregistrer;
 helper(['url', 'assets', 'form']);
  
 class Client extends BaseController
 {
+
+    public function reservationTraversee($notraversee)
+    {
+        $session = session();
+
+        $modTraversee = new ModeleTraversee();
+        $data['UneLiaisonPourTraversee'] = $modTraversee->getUneLiaisonPourUneTraversee($notraversee);
+        $data['LaTraversee'] = $modTraversee->where(['notraversee' => $notraversee])->first();
+
+
+        if(isset($_SESSION['noclient']))
+        {
+            $modClient = new ModeleClient();
+            $data['InfosClient'] = $modClient->where(['NOCLIENT' => $_SESSION['noclient']])->first();
+        }
+        
+        $noliaison = $_SESSION['noliaison'];
+        $datedepart = $_SESSION['dateDepart'];
+
+        $modTarif = new ModeleTarif();
+        $data['LesTarifsParType'] = $modTarif->getAllTypeEtTarif($noliaison, $datedepart);
+
+        $data['TitreDeLaPage'] = 'Réserver une traversée';
+        if (!$this->request->is('post')) {
+            return view('Templates/Header')
+            . view('Client/vue_ReservationTraversee', $data)
+            . view('Templates/Footer');
+        }
+        
+
+        foreach($data['LesTarifsParType'] as $UnTarifParType)
+            {
+                $donneesAInserer = [
+                    'LETTRECATEGORIE' => $UnTarifParType['LETTRECATEGORIE'],
+                    'NOTYPE' => $UnTarifParType['NOTYPE'],
+                    'QUANTITERESERVEE' => $this->request->getPost('quantite'),
+                ]; 
+                $modEnregistrer = new ModeleEnregistrer;
+                $donnees['EnregistrementAjoute'] = $modEnregistrer->insert($donneesAInserer, false);
+            }
+        
+        return view('Templates/Header')
+        . view('Visiteur/vue_ReservationTraversee', $data)
+        . view('Templates/Footer');
+    }
+
     public function modifierClient()
     {
         $session = session();
@@ -16,15 +67,15 @@ class Client extends BaseController
             . view('Templates/Footer');
         }
         $reglesValidation = [
-            'txtNom' => 'permit_empty|string|max_length[60]',
-            'txtPrenom' => 'permit_empty|string|max_length[60]',
-            'txtAdresse' => 'permit_empty|string|max_length[128]',
-            'txtCodepostal' => 'permit_empty|integer|max_length[11]',
-            'txtVille' => 'permit_empty|string|max_length[80]',
-            'txtTelfixe' => 'permit_empty|string|max_length[16]',
-            'txtTelportable' => 'permit_empty|string|max_length[16]',
-            'txtMel' => 'permit_empty|string|max_length[80]',
-            'txtMotDePasse' => 'permit_empty|string|min_length[2]',
+            'txtNom' => 'required|string|max_length[60]',
+            'txtPrenom' => 'required|string|max_length[60]',
+            'txtAdresse' => 'required|string|max_length[128]',
+            'txtCodepostal' => 'required|integer|max_length[11]',
+            'txtVille' => 'required|string|max_length[80]',
+            'txtTelfixe' => 'required|string|max_length[16]',
+            'txtTelportable' => 'required|string|max_length[16]',
+            'txtMel' => 'required|string|max_length[80]',
+            'txtMotDePasse' => 'required|string|min_length[2]',
         ];
         if (!$this->validate($reglesValidation)) {
 
@@ -47,7 +98,7 @@ class Client extends BaseController
         ); 
         $modClient = new ModeleClient();
         $condition = ['NOCLIENT'=>$session->get('noclient')];
-        $donnees['clientAModifier'] = $modClient->where('NOCLIENT', $noclient)->update($noclient,$donneesAModifier, false);
+        $donnees['clientAModifier'] = $modClient->where('NOCLIENT', $condition)->update($condition,$donneesAModifier, false);
 
         return view('Templates/Header')
             .view('Client/vue_RapportModifierClient', $donnees)
@@ -63,7 +114,7 @@ class Client extends BaseController
 
         $pager = \Config\Services::pager();
         $modelReservation = new ModeleReservation(); //instanciation du modèle
-        $data['lesReservations'] = $modelReservation->paginate(4); // Récupération des données via le modèle
+        $data['lesReservations'] = $modelReservation->paginate(3); // Récupération des données via le modèle
         $data['pager'] = $modelReservation->pager;
      
         return view('Templates/Header') //envoi du header

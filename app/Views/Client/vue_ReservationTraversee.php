@@ -1,6 +1,6 @@
 <html lang="en">
 <head>
-  <title>Bootstrap Example</title>
+  <title>Tarfifs</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -24,7 +24,7 @@
             {
                 echo'Vous devez vous connecter avant de réserver <br/>';
             }
-                echo 'Saisissez les informations relatives à la réservation <br/>';
+            echo 'Saisissez les informations relatives à la réservation <br/>';
         ?>
     </div>
     <div>
@@ -41,14 +41,14 @@
                         {
                             echo '<tr><td>' .$TarifEtType->LIBELLE. '</td>';
                             echo '<td>' .$TarifEtType->tarif. '</td>';
-                            echo '<td><input type="text" name="quantite" size="10"/></td>';
+                            echo '<td><input type="number" name="quantite" size="10" pattern="[0-9]+"/></td>';
                             echo'</tr>';
                         }
                     ?>
                 </tr>
         </table>
         <br/>
-        <input type="submit" value="Valider panier">
+        <input type="submit" value="Valider panier" name="btnReservation">
         </form>
     </div>
 </body>
