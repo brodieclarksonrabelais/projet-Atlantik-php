@@ -179,20 +179,40 @@ class Visiteur extends BaseController
     public function reservationTraversee($notraversee)
     {
         $session = session();
+
         $modTraversee = new ModeleTraversee();
-        $data['LiaisonPourTraversee'] = $modTraversee->getNoLiaisonPourUneTraversee($notraversee);
+        $data['UneLiaisonPourTraversee'] = $modTraversee->getUneLiaisonPourUneTraversee($notraversee);
         $data['LaTraversee'] = $modTraversee->where(['notraversee' => $notraversee])->first();
 
-        $modClient = new ModeleClient();
-        $data['InfosClient'] = $modClient->where(['NOCLIENT' => $_SESSION['noclient']])->first();
+
+        if(isset($_SESSION['noclient']))
+        {
+            $modClient = new ModeleClient();
+            $data['InfosClient'] = $modClient->where(['NOCLIENT' => $_SESSION['noclient']])->first();
+        }
         
-        /*$noliaison = $modTraversee->getNoLiaisonPourUneTraversee($notraversee);
-        $datedepart = $modTraversee->getDateDepartPourUneTraversee($notraversee);*/
         $noliaison = $_SESSION['noliaison'];
         $datedepart = $_SESSION['dateDepart'];
 
         $modTarif = new ModeleTarif();
         $data['LesTarifsParType'] = $modTarif->getAllTypeEtTarif($noliaison, $datedepart);
+
+        $data['TitreDeLaPage'] = 'Réserver une traversée';
+        if (!$this->request->is('post')) {
+            return view('Templates/Header')
+            . view('Visiteur/vue_ReservationTraversee', $data)
+            . view('Templates/Footer');
+        }
+
+        $reglesValidation = [
+            'quantite' => 'required|integer|max_length[60]',
+        ];
+        if (!$this->validate($reglesValidation)) {
+            $data['TitreDeLaPage'] = "Saisie incorrecte";
+            return view('Templates/Header')
+            . view('Visiteur/vue_ReservationTraversee', $data)
+            . view('Templates/Footer');
+        }
         
         return view('Templates/Header')
         . view('Visiteur/vue_ReservationTraversee', $data)

@@ -21,7 +21,7 @@ $routes->match(['get', 'post'], 'horairestraversee/(:alphanum)', 'Visiteur::hora
  
 
 //Client
-$routes->match(['get','post'], 'modifieruncompte', 'Client::modifierClient');
-$routes->get('reservationspourunclient/(:alphanum)', 'Client::reservationsPourUnClient/$1');
-$routes->get('reservationspourunclient', 'Client::reservationsPourUnClient');
+$routes->match(['get','post'], 'modifieruncompte', 'Client::modifierClient', ["filter"=> "filtreclient"]);
+$routes->get('reservationspourunclient/(:alphanum)', 'Client::reservationsPourUnClient/$1', ["filter"=> "filtreclient"]);
+$routes->get('reservationspourunclient', 'Client::reservationsPourUnClient', ["filter"=> "filtreclient"]);
 $routes->match(['get', 'post'], 'reservationtraversee/(:alphanum)', 'Visiteur::reservationTraversee/$1');

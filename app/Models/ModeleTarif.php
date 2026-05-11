@@ -74,7 +74,7 @@ class ModeleTarif extends Model
             ->where('tar.noliaison', $noliaison)
             ->where('datedebut <=', $datedepart) 
             ->where('datefin >=', $datedepart)
-            ->groupby('ty.notype, ty.lettrecategorie')
+            ->groupby('ty.lettrecategorie, ty.libelle')
             ->get()
             ->getResult();
         }

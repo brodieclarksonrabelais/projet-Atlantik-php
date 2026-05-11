@@ -79,21 +79,15 @@ class ModeleTraversee extends Model
         ->getResult();
     }
 
-    public function getNoLiaisonPourUneTraversee($notraversee)
+    public function getUneLiaisonPourUneTraversee($notraversee)
     {
-        return  $this->select('noliaison')
+        return  $this->join('liaison l', 'l.noliaison = trav.noliaison', 'inner')
+        ->join('port pd', 'l.NOPORT_DEPART = pd.NOPORT',  'inner')
+        ->join('port pa', 'l.NOPORT_ARRIVEE = pa.NOPORT',  'inner')
+        ->select('l.noliaison, pd.NOM as portDepart, pa.NOM as portArrivee')
         ->where('notraversee', $notraversee)
         ->get()
         ->getRow();
     }
 
-    public function getDateDepartPourUneTraversee($notraversee)
-    
-    {
-        return $this->select('DATE(dateheuredepart)')
-        ->where('notraversee', $notraversee)
-        ->get()
-        ->getRow();
-    }
-    
 }
