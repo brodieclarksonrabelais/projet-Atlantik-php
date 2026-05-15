@@ -128,10 +128,12 @@ class Visiteur extends BaseController
 
     public function tarifsParLiaison($noliaison)
     {
+        $modCategorie = new ModeleCategorie();
+        $data['categories'] = $modCategorie->findAll();
+        $data['types'] = $modCategorie->getype();
+
         $modTarif = new ModeleTarif();
             $data['noliaison']  = $noliaison;
-            $data['categories'] = $modTarif->getcategorie();
-            $data['types']      = $modTarif->getype();
             $data['periodes']   = $modTarif->getperiode();
             $data['tarifs']     = $modTarif->getAllTarifs($noliaison);
             $data['nomsports']  = $modTarif->getnomport($noliaison);

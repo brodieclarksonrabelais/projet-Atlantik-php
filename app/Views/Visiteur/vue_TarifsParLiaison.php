@@ -52,8 +52,8 @@ echo "</table>";*/
                 foreach ($types as $type) {
                           if ($type->LETTRECATEGORIE !== $cat->LETTRECATEGORIE); 
                                 echo '<tr>';
-                                echo' <td>' . $cat->LETTRECATEGORIE . ' - ' . $cat->libelle. '</td>';
-                                echo '<td>' . $cat->LETTRECATEGORIE . $type->NOTYPE . ' - ' . $type->libelle . '</td>';
+                                echo' <td>' . $cat->LETTRECATEGORIE . ' - ' . $cat->LIBELLE. '</td>';
+                                echo '<td>' . $cat->LETTRECATEGORIE . $type->NOTYPE . ' - ' . $type->LIBELLE . '</td>';
                                 foreach($tarifs as $unTarif)
                                 {
                                     if ($unTarif->LETTRECATEGORIE === $cat->LETTRECATEGORIE && $unTarif->NOTYPE === $type->NOTYPE) 

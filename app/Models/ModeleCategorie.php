@@ -10,5 +10,14 @@ class ModeleCategorie extends Model
     protected $returnType = 'object'; 
     protected $allowedFields = ['libelle'];
 
+    public function getype() 
+    {     
+        return $this->select('ty.NOTYPE, ty.LETTRECATEGORIE, ty.LIBELLE')
+        ->from('type ty')
+        ->groupby('ty.NOTYPE, ty.LETTRECATEGORIE, ty.LIBELLE')
+        ->get()
+        ->getResult();
+    }
+
 }
 

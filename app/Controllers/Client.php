@@ -6,6 +6,7 @@ use App\Models\ModeleTarif;
 use App\Models\ModeleTraversee;
 use App\Models\ModeleCategorie;
 use App\Models\ModeleEnregistrer;
+use App\Models\ModeleReservation;
 helper(['url', 'assets', 'form']);
  
 class Client extends BaseController
@@ -40,16 +41,43 @@ class Client extends BaseController
         }
         
 
-        foreach($data['LesTarifsParType'] as $UnTarifParType)
-            {
-                $donneesAInserer = [
-                    'LETTRECATEGORIE' => $UnTarifParType['LETTRECATEGORIE'],
-                    'NOTYPE' => $UnTarifParType['NOTYPE'],
-                    'QUANTITERESERVEE' => $this->request->getPost('quantite'),
-                ]; 
-                $modEnregistrer = new ModeleEnregistrer;
-                $donnees['EnregistrementAjoute'] = $modEnregistrer->insert($donneesAInserer, false);
-            }
+        if ($this->request->is('post')) {
+                    $MontantTotal = 0;
+                    foreach ($this->request->getPost('LesTarifsParType') as $ligne) {
+                        if ($ligne['quantite'] != "") 
+                        {
+                            $tarif = (float) $ligne['tarif'];
+                            $quantite   = (float) $ligne['quantite'];
+                            $MontantTotal += $tarif * $quantite;
+                        }
+                    }
+                    $donneesReservation = [
+                        'NOTRAVERSEE'=> (int) $notraversee,
+                        'NOCLIENT' => (int) $session->get('noclient'),
+                        'DATEHEURE' => date('Y-m-d H:i:s'),
+                        'MONTANTTOTAL'=> (float) $MontantTotal,
+                        'PAYE'=> 0,
+                        'MODEREGLEMENT'=> null,
+                    ];
+                    $modReservation = new modeleReservation();
+                    $modReservation->insert($donneesReservation, false);
+
+
+                   $noReservation = $modReservation->getInsertID(); 
+                    foreach ($this->request->getPost('libelle') as $ligne) {
+                        if ($ligne['quantite'] != "") { 
+                            $donneesEnregistrer = [
+                                'NORESERVATION' => (int) $noreservation,
+                                'LETTRECATEGORIE' => $ligne['lettrecategorie'],
+                                'NOTYPE'  => (int) $ligne['notype'],
+                                'QUANTITERESERVEE'  => (int) $ligne['quantite'],
+                                'QUANTITEEMBARQUEE' => 0,
+                            ];
+                            $modEnregistrer = new ModeleEnregistrer;
+                            $modEnregistrer->insert($donneesEnregistrer, false);
+                        }
+                    }
+                }
         
         return view('Templates/Header')
         . view('Visiteur/vue_ReservationTraversee', $data)
