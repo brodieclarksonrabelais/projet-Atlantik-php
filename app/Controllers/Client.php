@@ -133,20 +133,22 @@ class Client extends BaseController
             .view('Templates/Footer');
     }
 
-    public function reservationsPourUnClient($mel)
+    public function reservationsPourUnClient()
     {
+        $session = session();
+
         $data['TitreDeLaPage'] = 'Historique des reservations';
         
         $modClient = new ModeleClient();
-        $donnees['noClient'] = $modClient->where($mel, 'MEL');
+        $noclient = $session->get('noclient');
 
         $pager = \Config\Services::pager();
-        $modelReservation = new ModeleReservation(); //instanciation du modèle
-        $data['lesReservations'] = $modelReservation->paginate(3); // Récupération des données via le modèle
+        $modelReservation = new ModeleReservation();
+        $data['lesReservations'] = $modelReservation->getAllReservation($noclient); 
         $data['pager'] = $modelReservation->pager;
      
-        return view('Templates/Header') //envoi du header
+        return view('Templates/Header')
         .view('Client/vue_HistoriqueReservation', $data)
-        .view('Templates/Footer'); //envoi du footer
+        .view('Templates/Footer'); 
     }
 }
