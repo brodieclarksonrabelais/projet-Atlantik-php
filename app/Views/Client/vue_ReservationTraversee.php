@@ -42,9 +42,9 @@
                             $i = 0;
                             echo '<tr>';
                                 echo "<td>";
-                                    echo "<input type='hidden' name='LesTarifsParType[$i][notype]' value='" . $TarifEtType->notype . "' />";
-                                    echo "<input type='hidden' name='LesTarifsParType[$i][lettrecategorie]' value='" . $TarifEtType->lettrecategorie  . "' />";
-                                    echo "<input type='hidden' name='LesTarifsParType[$i][libelle]' value='" . $TarifEtType->LIBELLE . "' />";
+                                    echo "<input type='hidden' name='LesTarifsParType[$i][notype]' value='" . $TarifEtType->notype . "' />
+                                    <input type='hidden' name='LesTarifsParType[$i][lettrecategorie]' value='" . $TarifEtType->lettrecategorie  . "' />
+                                    <input type='hidden' name='LesTarifsParType[$i][libelle]' value='" . $TarifEtType->LIBELLE . "' />";
                                     echo $TarifEtType->LIBELLE;
                                 echo "</td>";
                                 echo "<td>";

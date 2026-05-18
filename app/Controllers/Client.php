@@ -41,43 +41,43 @@ class Client extends BaseController
         }
         
 
-        if ($this->request->is('post')) {
-                    $MontantTotal = 0;
-                    foreach ($this->request->getPost('LesTarifsParType') as $ligne) {
-                        if ($ligne['quantite'] != "") 
-                        {
-                            $tarif = (float) $ligne['tarif'];
-                            $quantite   = (float) $ligne['quantite'];
-                            $MontantTotal += $tarif * $quantite;
-                        }
-                    }
-                    $donneesReservation = [
-                        'NOTRAVERSEE'=> (int) $notraversee,
-                        'NOCLIENT' => (int) $session->get('noclient'),
-                        'DATEHEURE' => date('Y-m-d H:i:s'),
-                        'MONTANTTOTAL'=> (float) $MontantTotal,
-                        'PAYE'=> 0,
-                        'MODEREGLEMENT'=> null,
-                    ];
-                    $modReservation = new modeleReservation();
-                    $modReservation->insert($donneesReservation, false);
-
-
-                   $noReservation = $modReservation->getInsertID(); 
-                    foreach ($this->request->getPost('libelle') as $ligne) {
-                        if ($ligne['quantite'] != "") { 
-                            $donneesEnregistrer = [
-                                'NORESERVATION' => (int) $noreservation,
-                                'LETTRECATEGORIE' => $ligne['lettrecategorie'],
-                                'NOTYPE'  => (int) $ligne['notype'],
-                                'QUANTITERESERVEE'  => (int) $ligne['quantite'],
-                                'QUANTITEEMBARQUEE' => 0,
-                            ];
-                            $modEnregistrer = new ModeleEnregistrer;
-                            $modEnregistrer->insert($donneesEnregistrer, false);
-                        }
+        if (isset($_POST['btnReservation'])) {
+                $MontantTotal = 0;
+                foreach ($this->request->getPost('LesTarifsParType') as $UneLigne) {
+                    if ($UneLigne['quantite'] != "") 
+                    {
+                        $tarif = (float) $UneLigne['tarif'];
+                        $quantite   = (float) $UneLigne['quantite'];
+                        $MontantTotal += $tarif * $quantite;
                     }
                 }
+                $donneesReservation = [
+                    'NOTRAVERSEE'=> (int) $notraversee,
+                    'NOCLIENT' => (int) $session->get('noclient'),
+                    'DATEHEURE' => date('Y-m-d H:i:s'),
+                    'MONTANTTOTAL'=> (float) $MontantTotal,
+                    'PAYE'=> 0,
+                    'MODEREGLEMENT'=> null,
+                ];
+                $modReservation = new modeleReservation();
+                $modReservation->insert($donneesReservation, false);
+
+
+                $noReservation = $modReservation->getInsertID(); 
+                foreach ($this->request->getPost('libelle') as $ligne) {
+                    if ($ligne['quantite'] != "") { 
+                        $donneesEnregistrer = [
+                            'NORESERVATION' => (int) $noreservation,
+                            'LETTRECATEGORIE' => $ligne['lettrecategorie'],
+                            'NOTYPE'  => (int) $ligne['notype'],
+                            'QUANTITERESERVEE'  => (int) $ligne['quantite'],
+                            'QUANTITEEMBARQUEE' => 0,
+                        ];
+                        $modEnregistrer = new ModeleEnregistrer;
+                        $modEnregistrer->insert($donneesEnregistrer, false);
+                    }
+                }
+            }
         
         return view('Templates/Header')
         . view('Visiteur/vue_ReservationTraversee', $data)
