@@ -42,35 +42,37 @@ class Client extends BaseController
         
 
         if (isset($_POST['btnReservation'])) {
+            if (isset($_POST['UnTarifParType'])){
                 $MontantTotal = 0;
-                foreach ($this->request->getPost('LesTarifsParType') as $UneLigne) {
+                foreach ($_POST['UnTarifParType'] as $UneLigne) {
                     if ($UneLigne['quantite'] != "") 
                     {
                         $tarif = (float) $UneLigne['tarif'];
                         $quantite   = (float) $UneLigne['quantite'];
                         $MontantTotal += $tarif * $quantite;
                     }
+                    
+                    $donneesReservation = [
+                        'NOTRAVERSEE'=> (int) $notraversee,
+                        'NOCLIENT' => (int) $session->get('noclient'),
+                        'DATEHEURE' => date('Y-m-d H:i:s'),
+                        'MONTANTTOTAL'=> (float) $MontantTotal,
+                        'PAYE'=> 0,
+                        'MODEREGLEMENT'=> null,
+                    ];
                 }
-                $donneesReservation = [
-                    'NOTRAVERSEE'=> (int) $notraversee,
-                    'NOCLIENT' => (int) $session->get('noclient'),
-                    'DATEHEURE' => date('Y-m-d H:i:s'),
-                    'MONTANTTOTAL'=> (float) $MontantTotal,
-                    'PAYE'=> 0,
-                    'MODEREGLEMENT'=> null,
-                ];
-                $modReservation = new modeleReservation();
-                $modReservation->insert($donneesReservation, false);
+                    $modReservation = new modeleReservation();
+                    $modReservation->insert($donneesReservation, false);
 
 
                 $noReservation = $modReservation->getInsertID(); 
-                foreach ($this->request->getPost('libelle') as $ligne) {
-                    if ($ligne['quantite'] != "") { 
+                foreach ($_POST['UnTarifParType'] as $UneLigne) {
+                    if ($UneLigne['quantite']!= "") { 
                         $donneesEnregistrer = [
-                            'NORESERVATION' => (int) $noreservation,
-                            'LETTRECATEGORIE' => $ligne['lettrecategorie'],
-                            'NOTYPE'  => (int) $ligne['notype'],
-                            'QUANTITERESERVEE'  => (int) $ligne['quantite'],
+                            'NORESERVATION' => (int) $noReservation,
+                            'LETTRECATEGORIE' => $UneLigne['lettrecategorie'],
+                            'NOTYPE'  => (int) $UneLigne['notype'],
+                            'QUANTITERESERVEE'  => (int) $UneLigne['quantite'],
                             'QUANTITEEMBARQUEE' => 0,
                         ];
                         $modEnregistrer = new ModeleEnregistrer;
@@ -78,9 +80,10 @@ class Client extends BaseController
                     }
                 }
             }
-        
+        }
+    
         return view('Templates/Header')
-        . view('Visiteur/vue_ReservationTraversee', $data)
+        . view('Client/vue_ReservationTraversee', $data)
         . view('Templates/Footer');
     }
 

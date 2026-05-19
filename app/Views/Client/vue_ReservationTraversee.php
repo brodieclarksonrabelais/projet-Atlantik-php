@@ -37,29 +37,26 @@
                     <th>Quantité</th>
                 </tr>
                 </thead>
-                    <?php foreach($LesTarifsParType as $TarifEtType)
+                    <?php 
+                    $i = 0;
+                    foreach($LesTarifsParType as $TarifEtType)
                         {
-                            $i = 0;
                             echo '<tr>';
                                 echo "<td>";
-                                    echo "<input type='hidden' name='LesTarifsParType[$i][notype]' value='" . $TarifEtType->notype . "' />
-                                    <input type='hidden' name='LesTarifsParType[$i][lettrecategorie]' value='" . $TarifEtType->lettrecategorie  . "' />
-                                    <input type='hidden' name='LesTarifsParType[$i][libelle]' value='" . $TarifEtType->LIBELLE . "' />";
+                                    echo "<input type='hidden' name='UnTarifParType[$i][notype]' value='" . $TarifEtType->notype . "' />
+                                    <input type='hidden' name='UnTarifParType[$i][lettrecategorie]' value='" . $TarifEtType->lettrecategorie  . "' />
+                                    <input type='hidden' name='UnTarifParType[$i][libelle]' value='" . $TarifEtType->LIBELLE . "' />";
                                     echo $TarifEtType->LIBELLE;
                                 echo "</td>";
                                 echo "<td>";
-                                    echo "<input type='hidden' name='LesTarifsParType[$i][tarif]' value='" . $TarifEtType->tarif . "' />";
+                                    echo "<input type='hidden' name='UnTarifParType[$i][tarif]' value='" . $TarifEtType->tarif . "' />";
                                     echo $TarifEtType->tarif;
                                 echo "</td>";
                                 echo '<td>';
-                                    echo '<input type="number" name="LesTarifsParType[$i][quantite]" size="10" pattern="[0-9]+"/>';
+                                    echo '<input type="number" name="UnTarifParType[$i][quantite]" size="10" pattern="[0-9]+"/>';
                                 echo '</td>';
                             echo'</tr>';
                             $i++;
-                            /*echo '<tr><td>' .$TarifEtType->LIBELLE. '</td>';
-                            echo '<td>' .$TarifEtType->tarif. '</td>';
-                            echo '<td><input type="number" name="quantite" size="10" pattern="[0-9]+"/></td>';
-                            echo'</tr>'; */
                         }
                     ?>
                 </tr>

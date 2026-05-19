@@ -8,7 +8,7 @@ class ModeleReservation extends Model
     protected $primaryKey = 'noreservation';
     protected $useAutoIncrement = true;
     protected $returnType = 'object'; 
-    protected $allowedFields = ['notraversee', 'noclient', 'dateheure', 'montanttotal', 'paye', 'modereglement'];
+    protected $allowedFields = ['NOTRAVERSEE', 'NOCLIENT', 'DATEHEURE', 'MONTANTTOTAL', 'PAYE', 'MODEREGLEMENT'];
 
     public function getAllReservation($noclient)
     {

@@ -18,7 +18,7 @@ foreach ($lesReservations as $uneReservation)
     .$uneReservation->datereservation."</TD><TD>"
     .$uneReservation->portDepart."</TD><TD>"
     .$uneReservation->portArrivee."</TD><TD>"
-    .$uneReservation->datedebut."</TD><TD>"
+    .$uneReservation->dateheuredepart."</TD><TD>"
     .$uneReservation->montanttotal."</TD><TD>"
     .$uneReservation->paye."</TD>";
     echo "</TR>";

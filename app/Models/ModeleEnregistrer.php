@@ -4,9 +4,7 @@ use CodeIgniter\Model;
  
 class ModeleEnregistrer extends Model
 {
-    protected $table = 'enregistrer';
-    protected $primaryKey = 'NORESERVATION, LETTRECATEGORIE, NOTYPE'; 
-    protected $useAutoIncrement = true;
+    protected $table = 'enregistrer'; 
     protected $returnType = 'object'; 
-    protected $allowedFields = ['QUANTITERESERVEE'];
+    protected $allowedFields = ['NORESERVATION', 'LETTRECATEGORIE', 'NOTYPE', 'QUANTITERESERVEE', 'QUANTITEEMBARQUEE'];
 }
