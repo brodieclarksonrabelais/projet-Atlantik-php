@@ -21,8 +21,7 @@ class ModeleReservation extends Model
         ->select('dateheuredepart')
         ->select('pd.NOM as portDepart, pa.NOM as portArrivee')
         ->where('c.noclient', $noclient)
-        ->get()
-        ->getResult();
+        ->paginate(5);
     }
 }
 

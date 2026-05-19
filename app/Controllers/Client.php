@@ -27,8 +27,8 @@ class Client extends BaseController
             $data['InfosClient'] = $modClient->where(['NOCLIENT' => $_SESSION['noclient']])->first();
         }
         
-        $noliaison = $_SESSION['noliaison'];
-        $datedepart = $_SESSION['dateDepart'];
+        $noliaison = $session->get('noliaison');
+        $datedepart = $session->get('dateDepart');
 
         $modTarif = new ModeleTarif();
         $data['LesTarifsParType'] = $modTarif->getAllTypeEtTarif($noliaison, $datedepart);
@@ -49,14 +49,14 @@ class Client extends BaseController
                     {
                         $tarif = (float) $UneLigne['tarif'];
                         $quantite   = (float) $UneLigne['quantite'];
-                        $MontantTotal += $tarif * $quantite;
+                        $data['MontantTotal'] += $tarif * $quantite;
                     }
                     
                     $donneesReservation = [
                         'NOTRAVERSEE'=> (int) $notraversee,
                         'NOCLIENT' => (int) $session->get('noclient'),
                         'DATEHEURE' => date('Y-m-d H:i:s'),
-                        'MONTANTTOTAL'=> (float) $MontantTotal,
+                        'MONTANTTOTAL'=> (float) $data['MontantTotal'],
                         'PAYE'=> 0,
                         'MODEREGLEMENT'=> null,
                     ];
@@ -65,7 +65,9 @@ class Client extends BaseController
                     $modReservation->insert($donneesReservation, false);
 
 
-                $noReservation = $modReservation->getInsertID(); 
+                $noReservation = $modReservation->getInsertID();
+                $session->set('noreservation', $noReservation);
+
                 foreach ($_POST['UnTarifParType'] as $UneLigne) {
                     if ($UneLigne['quantite']!= "") { 
                         $donneesEnregistrer = [
@@ -152,6 +154,6 @@ class Client extends BaseController
      
         return view('Templates/Header')
         .view('Client/vue_HistoriqueReservation', $data)
-        .view('Templates/Footer'); 
+        .view('Templates/Footer');
     }
 }

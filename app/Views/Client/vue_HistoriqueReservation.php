@@ -24,6 +24,6 @@ foreach ($lesReservations as $uneReservation)
     echo "</TR>";
 }
 echo "</table>";
- ?>
+?>
  
 <?= $pager->links() ?>
