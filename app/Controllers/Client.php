@@ -93,6 +93,12 @@ class Client extends BaseController
     {
         $session = session();
 
+        if(isset($_SESSION['noclient']))
+        {
+            $modClient = new ModeleClient();
+            $data['InfosClient'] = $modClient->where(['NOCLIENT' => $_SESSION['noclient']])->first();
+        }
+
         $data['TitreDeLaPage'] = 'Modifer vos informations';
         if (!$this->request->is('post')) {
             return view('Templates/Header')
