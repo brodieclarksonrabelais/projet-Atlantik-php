@@ -10,7 +10,7 @@ class ModeleTarif extends Model
     protected $returnType = 'object'; 
     protected $allowedFields = ['noperiode', 'lettrecategorie', 'notype', 'noliaison', 'tarif'];
 
-    /*public function getAllTarif($noliaison)
+    public function getAllTarif($noliaison)
     {
         return $this->join('categorie cat', 'tar.lettrecategorie = cat.lettrecategorie', 'inner')
         ->join('type ty', 'tar.lettrecategorie = ty.lettrecategorie and tar.notype = ty.notype',  'inner')
@@ -27,7 +27,7 @@ class ModeleTarif extends Model
         ->where('tar.noliaison', $noliaison)
         ->get()
         ->getResult();
-    }*/
+    }
         
         public function getperiode(){
             return $this->select('p.NOPERIODE, p.DATEDEBUT, p.DATEFIN')

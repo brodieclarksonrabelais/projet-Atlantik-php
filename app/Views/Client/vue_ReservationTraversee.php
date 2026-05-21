@@ -43,17 +43,17 @@
                         {
                             echo '<tr>';
                                 echo "<td>";
-                                    echo "<input type='hidden' name='UnTarifParType[$i][notype]' value='" . $TarifEtType->notype . "' />
-                                    <input type='hidden' name='UnTarifParType[$i][lettrecategorie]' value='" . $TarifEtType->lettrecategorie  . "' />
-                                    <input type='hidden' name='UnTarifParType[$i][libelle]' value='" . $TarifEtType->LIBELLE . "' />";
+                                    echo "<input type='hidden' name='UnTarifParType[".$i."][notype]' value='" . $TarifEtType->notype . "' />
+                                    <input type='hidden' name='UnTarifParType[".$i."][lettrecategorie]' value='" . $TarifEtType->lettrecategorie  . "' />
+                                    <input type='hidden' name='UnTarifParType[".$i."][libelle]' value='" . $TarifEtType->LIBELLE . "' />";
                                     echo $TarifEtType->LIBELLE;
                                 echo "</td>";
                                 echo "<td>";
-                                    echo "<input type='hidden' name='UnTarifParType[$i][tarif]' value='" . $TarifEtType->tarif . "' />";
+                                    echo "<input type='hidden' name='UnTarifParType[".$i."][tarif]' value='" . $TarifEtType->tarif . "' />";
                                     echo $TarifEtType->tarif;
                                 echo "</td>";
                                 echo '<td>';
-                                    echo '<input type="number" name="UnTarifParType[$i][quantite]" size="10" pattern="[0-9]+"/>';
+                                    echo '<input type="number" name="UnTarifParType['.$i.'][quantite]" size="10" pattern="[0-9]+"/>';
                                 echo '</td>';
                             echo'</tr>';
                             $i++;

@@ -43,7 +43,7 @@ class Client extends BaseController
 
         if (isset($_POST['btnReservation'])) {
             if (isset($_POST['UnTarifParType'])){
-                $MontantTotal = 0;
+                $data['MontantTotal'] = 0;
                 foreach ($_POST['UnTarifParType'] as $UneLigne) {
                     if ($UneLigne['quantite'] != "") 
                     {
@@ -61,8 +61,8 @@ class Client extends BaseController
                         'MODEREGLEMENT'=> null,
                     ];
                 }
-                    $modReservation = new modeleReservation();
-                    $modReservation->insert($donneesReservation, false);
+                $modReservation = new modeleReservation();
+                $modReservation->insert($donneesReservation, false);
 
 
                 $noReservation = $modReservation->getInsertID();
@@ -93,11 +93,8 @@ class Client extends BaseController
     {
         $session = session();
 
-        if(isset($_SESSION['noclient']))
-        {
-            $modClient = new ModeleClient();
-            $data['InfosClient'] = $modClient->where(['NOCLIENT' => $_SESSION['noclient']])->first();
-        }
+        $modClient = new ModeleClient();
+        $data['InfosClient'] = $modClient->where(['NOCLIENT' => $_SESSION['noclient']])->first();
 
         $data['TitreDeLaPage'] = 'Modifer vos informations';
         if (!$this->request->is('post')) {
