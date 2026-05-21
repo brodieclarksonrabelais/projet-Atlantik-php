@@ -5,19 +5,12 @@
         ?>
     </div>
     <div class="card bg-light shadow col-md-5">
-        <?php if(isset($_SESSION['noclient']))
-            {
-                echo 'Nom : '.$InfosClient->NOM. ' , Prenom : '.$InfosClient->PRENOM.'<br/>';
-                echo 'Adresse : '.$InfosClient->ADRESSE.'<br/>';
-                echo 'CodePostal : '.$InfosClient->CODEPOSTAL. ' , Ville : '.$InfosClient->VILLE.'<br/>';
-            }
-            else
-            {
-                echo'Vous devez vous connecter avant de réserver <br/>';
-            }
-            echo 'Saisissez les informations relatives à la réservation <br/>';
+        <?php echo 'Nom : '.$InfosClient->NOM. ' , Prenom : '.$InfosClient->PRENOM.'<br/>';
+            echo 'Adresse : '.$InfosClient->ADRESSE.'<br/>';
+            echo 'CodePostal : '.$InfosClient->CODEPOSTAL. ' , Ville : '.$InfosClient->VILLE.'<br/>';
         ?>
     </div>
     <div>
-        
+        <?php echo 'Montant total à régler : ' .$MontantTotal;
+        ?>
     </div>
