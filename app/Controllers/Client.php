@@ -51,6 +51,7 @@ class Client extends BaseController
                         $quantite   = (float) $UneLigne['quantite'];
                         $data['MontantTotal'] += $tarif * $quantite;
                     }
+                    $data['ModeReglement'] = null;
                     
                     $donneesReservation = [
                         'NOTRAVERSEE'=> (int) $notraversee,
@@ -58,7 +59,7 @@ class Client extends BaseController
                         'DATEHEURE' => date('Y-m-d H:i:s'),
                         'MONTANTTOTAL'=> (float) $data['MontantTotal'],
                         'PAYE'=> 0,
-                        'MODEREGLEMENT'=> null,
+                        'MODEREGLEMENT'=> $data['ModeReglement'],
                     ];
                 }
                 $modReservation = new modeleReservation();
@@ -82,11 +83,24 @@ class Client extends BaseController
                     }
                 }
             }
+           $data['LesQuantitesReserves'] = $modEnregistrer->getUneReservation($noReservation);
         }
-    
-        return view('Templates/Header')
-        . view('Client/vue_ReservationTraversee', $data)
-        . view('Templates/Footer');
+
+        if ($data['LesQuantitesReserves'] != null) {
+            $data['TitreDeLaPage'] = "Compte rendu de la résevation";
+            echo view('Templates/Header')
+            . view('Client/vue_RapportReservation', $data)
+            . view('Templates/Footer');
+        } else {
+            $data['TitreDeLaPage'] = "Reservation impossible";
+            return view('Templates/Header')
+            . view('Client/vue_ReservationTraversee', $data)
+            . view('Templates/Footer');
+        }
+
+
+
+        
     }
 
     public function modifierClient()

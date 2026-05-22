@@ -12,8 +12,8 @@ class ModeleEnregistrer extends Model
         {
             return $this->join('reservation r', 'e.noreservation = r.noreservation', 'inner')
             ->join('type ty', 'e.lettrecategorie = ty.lettrecategorie and e.notype = ty.notype',  'inner')
-            ->select('MONTANTTOTAL, MODEREGLEMENT, LIBELLE, QUANTITERESERVEE')
-            ->where('noreservation', $noreservation)
+            ->select('ty.LIBELLE, QUANTITERESERVEE')
+            ->where('e.noreservation', $noreservation)
             ->get()
             ->getResult();
         }
