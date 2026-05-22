@@ -83,7 +83,31 @@ class Client extends BaseController
                     }
                 }
             }
-           $data['LesQuantitesReserves'] = $modEnregistrer->getUneReservation($noReservation);
+            $data['LesQuantitesReserves'] = $modEnregistrer->getUneReservation($noReservation);
+           
+
+            $message = '
+Bonjour Mr.'.$data['InfosClient']->NOM.',            
+
+Nous avons le plaisir de vous informer que votre résevation pour la traversee '.$data['LaTraversee']->NOTRAVERSEE.', qui déservira la liaison '.$data['UneLiaisonPourTraversee']->portDepart.' - '.$data['UneLiaisonPourTraversee']->portArrivee.', a été validée.
+
+Voici le montant de la facturation : '.$data['MontantTotal'].'€
+
+Nous vous remercions pour votre confience,
+Atlantik.
+';
+
+            $email = service('email');
+
+            $email->setFrom('your@example.com', 'Your Name');
+            $email->setTo($session->get('mel'));
+            $email->setCC('another@another-example.com');
+            $email->setBCC('them@their-example.com');
+
+            $email->setSubject('Compte rendu de votre réservation');
+            $email->setMessage($message);
+
+            $email->send();
         }
 
         if ($data['LesQuantitesReserves'] != null) {
@@ -97,10 +121,6 @@ class Client extends BaseController
             . view('Client/vue_ReservationTraversee', $data)
             . view('Templates/Footer');
         }
-
-
-
-        
     }
 
     public function modifierClient()
